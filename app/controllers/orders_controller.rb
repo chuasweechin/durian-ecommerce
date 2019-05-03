@@ -1,3 +1,5 @@
+require 'json'
+require 'net/http'
 require 'twilio-ruby'
 
 class OrdersController < ApplicationController
@@ -22,6 +24,20 @@ class OrdersController < ApplicationController
     )
 
     render plain: "Sent!"
+  end
+
+ def postal_code
+    url = 'https://developers.onemap.sg/commonapi/search?searchVal=763335&returnGeom=N&getAddrDetails=Y'
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+
+    response_in_JSON = JSON.parse(response)
+
+    if (response_in_JSON["results"].length == 0 )
+      render plain: "not found!"
+    else
+      render plain: response_in_JSON["results"][0]["ADDRESS"]
+    end
   end
 
   def create

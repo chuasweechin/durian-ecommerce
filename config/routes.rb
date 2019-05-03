@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get '/orders' => 'orders#index', as: 'orders'
 
   get '/orders/notification' => 'orders#notification', as: 'orders_notification'
+  get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
 
   # Create (C)
   post '/orders' => 'orders#create'
