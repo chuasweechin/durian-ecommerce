@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'durians#index'
 
@@ -15,14 +14,9 @@ Rails.application.routes.draw do
   # Read (R)
   get '/durians/:id' => 'durians#show' , as: 'durian'
 
-
   # Update (U)
   get '/durians/:id/edit' => 'durians#edit', as: 'edit_durian'
   patch '/durians/:id' => 'durians#update'
-
-  # Delete (D)
-  delete '/durians/:id' => 'durians#destroy'
-
 
 
   # Routes for Order
