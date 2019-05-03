@@ -16,10 +16,12 @@ class OrdersController < ApplicationController
     client = Twilio::REST::Client.new(account_sid, auth_token)
 
     client.messages.create(
-      from: '+14257488730',
+      from: ENV['TWILIO_SENDER_PHONE_NUMBER'],
       to: '+6594242851',
       body: "Hello World!"
     )
+
+    render plain: "Sent!"
   end
 
   def create
