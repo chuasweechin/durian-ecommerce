@@ -1,0 +1,20 @@
+<h1>Edit Durian</h1>
+
+<%= form_with scope: :durian, model: @durian, local: true do |form| %>
+  <p>
+    <%= form.label :name, 'Kopi Name' %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :price_per_kg, 'Price Per Kg' %><br>
+    <%= form.number_field :price_per_kg %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<br/>
+<%= link_to 'Back', root_path, class: 'btn btn-primary' %>

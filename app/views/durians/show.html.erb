@@ -1,0 +1,15 @@
+<h1>Show Durian</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @durian.name %>
+</p>
+
+<p>
+  <strong>Price Per Kg:</strong>
+  <br>
+  <%= "$" + @durian.price_per_kg.to_s %>
+</p>
+
+<%= link_to 'Edit', edit_durian_path(@durian), class: 'btn btn-primary' %>
+<%= link_to 'Back', root_path, class: 'btn btn-primary' %>
