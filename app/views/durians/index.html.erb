@@ -1,0 +1,33 @@
+<h1>Durian Listing</h1>
+
+<table class="table table-striped">
+	<thead>
+	  <tr>
+	  	<th scope="col">S/N</th>
+	    <th scope="col">Name</th>
+	    <th scope="col">Price Per Kg</th>
+	  </tr>
+	</thead>
+
+	<tbody>
+    <% @durians.each_with_index do |durian, index| %>
+      <tr>
+      	<td>
+        	<%= index + 1 %>
+        </td>
+        <td>
+        	<%= durian.name %>
+        </td>
+
+        <td>
+        	<%= "$" + durian.price_per_kg.to_s %>
+        </td>
+
+      </tr>
+    <% end %>
+
+	</tbody>
+</table>
+
+<br/>
+<%= link_to 'Add new durian', new_durian_path, class: 'btn btn-primary' %>

@@ -20,3 +20,18 @@ Taste.create(name: "Bitter")
 Taste.create(name: "Sweet")
 
 p "SEEDED TASTE DATA"
+
+Durian.destroy_all
+
+Durian.create(name: "Mao Shan Wang", price_per_kg: 18 )
+Durian.create(name: "D24", price_per_kg: 12 )
+Durian.create(name: "D13", price_per_kg: 10 )
+Durian.create(name: "Jin Feng (Golden Phoenix)", price_per_kg: 18 )
+Durian.create(name: "XO", price_per_kg: 10 )
+Durian.create(name: "Red Prawn", price_per_kg: 13 )
+Durian.create(name: "Black Pearl", price_per_kg: 15 )
+Durian.create(name: "Green Bamboo", price_per_kg: 10 )
+Durian.create(name: "Black Thorn", price_per_kg: 18 )
+Durian.create(name: "Black Gold", price_per_kg: 16 )
+
+p "SEEDED DURIAN DATA"
