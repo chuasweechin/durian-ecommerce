@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   # Index page (Order)
   get '/orders' => 'orders#index', as: 'orders'
 
+  get '/orders/notification' => 'orders#notification', as: 'orders_notification'
+
   # Create (C)
   post '/orders' => 'orders#create'
 
