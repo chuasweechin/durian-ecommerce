@@ -1,5 +1,6 @@
 class DuriansController < ApplicationController
   def index
+    @durains = Durian.all
   end
 
   def show
