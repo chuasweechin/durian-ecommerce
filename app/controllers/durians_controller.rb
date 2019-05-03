@@ -20,9 +20,4 @@ class DuriansController < ApplicationController
   def destroy
   end
 
-private
-  def post_params
-    params.require(:durian).permit(:name)
-  end
-
 end
