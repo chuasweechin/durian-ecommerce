@@ -22,8 +22,10 @@ Rails.application.routes.draw do
   # Index page (Order)
   get '/orders' => 'orders#index', as: 'orders'
 
-   # Create (C)
-  # get '/orders/new' => 'orders#new', as: 'new_order'
+
+  get '/orders/notification' => 'orders#notification', as: 'orders_notification'
+  get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
+
   post '/orders' => 'orders#create'
 
   # Update (U)

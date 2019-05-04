@@ -31,3 +31,17 @@
 
 <br/>
 <%= link_to 'Add new durian', new_durian_path, class: 'btn btn-primary' %>
+<%= link_to 'Notification', orders_notification_path, class: 'btn btn-primary' %>
+<%= link_to 'Postal Code', orders_postal_code_path, class: 'btn btn-primary' %>
+
+<br/>
+<br/>
+
+<% if user_signed_in? == true %>
+	<h1>Welcome - <%= current_user.email %></h1>
+	<br/>
+	<%= link_to 'Log Out', destroy_user_session_url, method: :delete, class: 'btn btn-danger' %>
+<% else %>
+	<h1>User</h1>
+	<%= link_to 'Log In', new_user_session_url, class: 'btn btn-secondary'%>
+<% end %>
