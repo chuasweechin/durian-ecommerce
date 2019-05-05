@@ -6,6 +6,7 @@
 	  	<th scope="col">S/N</th>
 	    <th scope="col">Name</th>
 	    <th scope="col">Price Per Kg</th>
+	    <th scope="col">Select</th>
 	  </tr>
 	</thead>
 
@@ -22,6 +23,11 @@
         <td>
         	<%= "$" + durian.price_per_kg.to_s %>
         </td>
+
+         <td>
+        	<%= link_to 'Select this durian', durian_path(durian.id), class: 'btn btn-primary' %>
+        </td>
+
 
       </tr>
     <% end %>

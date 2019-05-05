@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   get '/durians' => 'durians#index', as: 'durians'
 
   # # Create (C)
-  # get '/durians/new' => 'durians#new', as: 'new_durian'
-  # post '/durians' => 'durians#create'
+  get '/durians/new' => 'durians#new', as: 'new_durian'
+  post '/durians' => 'durians#create'
 
   # Read (R)
   get '/durians/:id' => 'durians#show' , as: 'durian'
@@ -34,5 +34,10 @@ Rails.application.routes.draw do
 
   # Read (R)
   get '/orders/:id' => 'orders#show' , as: 'order'
+
+
+  # Routes for User
+  # Index page (User)
+  get '/users' => 'users#index', as: 'users'
 
 end
