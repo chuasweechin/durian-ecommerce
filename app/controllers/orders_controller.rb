@@ -5,13 +5,14 @@ require 'twilio-ruby'
 
 class OrdersController < ApplicationController
   def index
+    @orders = Order.all
   end
 
   def show
+    @order = Order.find(params[:id])
   end
 
-  def new
-  end
+
 
   def notification
     auth_token = ENV['TWILIO_API_KEY']
@@ -64,18 +65,18 @@ class OrdersController < ApplicationController
   def create
   end
 
-  def edit
-  end
+  # def edit
+  # end
 
   def update
   end
 
-  def destroy
-  end
+  # def destroy
+  # end
 
-private
-  def post_params
-    params.require(:order).permit(:name)
-  end
+# private
+#   def post_params
+#     params.require(:order).permit(:name)
+#   end
 
 end
