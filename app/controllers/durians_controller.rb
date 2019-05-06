@@ -1,5 +1,8 @@
 class DuriansController < ApplicationController
+
   def index
+    puts "HERE LA!"
+    puts session["cart"].inspect
     @durians = Durian.all
   end
 
@@ -31,9 +34,20 @@ class DuriansController < ApplicationController
   def destroy
   end
 
+  def set_cookies
+    if !session["cart"].kind_of?(Array)
+    session["cart"] = []
+  end
+  puts "HEY LOOK HERE!"
+  puts post_params
+
+  session["cart"] << post_params
+  redirect_to durians_path
+  end
+
 private
   def post_params
-    params.require(:durian).permit(:name, :price_per_kg)
+    params.require(:durian).permit(:name, :price_per_kg, :weight)
   end
 
 end

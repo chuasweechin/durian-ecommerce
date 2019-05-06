@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   get '/durians/:id/edit' => 'durians#edit', as: 'edit_durian'
   patch '/durians/:id' => 'durians#update'
 
+  # Cookies Handlers
+  post '/durians/:id/cart' => 'durians#set_cookies', as: 'durians_cookies'
+
+
+
   # Routes for Order
   # Index page (Order)
   get '/orders' => 'orders#index', as: 'orders'
@@ -34,10 +39,5 @@ Rails.application.routes.draw do
 
   # Read (R)
   get '/orders/:id' => 'orders#show' , as: 'order'
-
-
-  # Routes for User
-  # Index page (User)
-  get '/users' => 'users#index', as: 'users'
 
 end
