@@ -25,8 +25,7 @@ Rails.application.routes.draw do
 
   get '/orders/notification' => 'orders#notification', as: 'orders_notification'
   get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
-  get '/orders/payment' => 'orders#payment', as: 'orders_payment'
-  post '/orders/payment/webhook' => 'orders#payment_webhook'
+  get '/orders/payment' => 'orders#payment', as: 'payment_webhook'
 
   post '/orders' => 'orders#create'
 
