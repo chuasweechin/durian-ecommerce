@@ -30,4 +30,7 @@
 /*.env
 
 # Ignore gem lock file
-/Gemfile.lock
+/Gemfile.*
+
+# Ignore ngrok executable file
+/ngrok

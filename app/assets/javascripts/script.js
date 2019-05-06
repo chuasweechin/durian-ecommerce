@@ -1,5 +1,5 @@
 window.onload = function() {
-    var responseHandler = function() {
+    var paymentCheckoutRequestHandler = function() {
         const stripe = Stripe('pk_test_pm5q2zjDrbbPI7ZEDX1sWbNV00smaYlfgy');
 
         stripe.redirectToCheckout({
@@ -14,12 +14,10 @@ window.onload = function() {
 
     var paymentEventHandler = function() {
         var request = new XMLHttpRequest();
-        request.addEventListener("load", responseHandler);
 
-        // ready the system by calling open, and specifying the url
+        request.addEventListener("load", paymentCheckoutRequestHandler);
         request.open("GET", "/orders/payment");
 
-        // send the request
         request.send();
     };
 
