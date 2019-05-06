@@ -1,4 +1,5 @@
 require 'json'
+require 'stripe'
 require 'net/http'
 require 'twilio-ruby'
 
@@ -39,6 +40,26 @@ class OrdersController < ApplicationController
     else
       render plain: response_in_JSON["results"][0]["ADDRESS"]
     end
+  end
+
+  def payment
+    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: [{
+        name: 'MSW',
+        description: '10kg MSW Durian',
+        images: ['https://example.com/t-shirt.png'],
+        amount: 2000,
+        currency: 'sgd',
+        quantity: 1,
+      }],
+      success_url: 'http://localhost:3000',
+      cancel_url: 'http://localhost:3000',
+    )
+
+    render plain: session.id
   end
 
   def create
