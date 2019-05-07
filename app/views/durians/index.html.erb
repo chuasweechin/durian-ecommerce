@@ -1,4 +1,4 @@
-<html class="sp🚧  js no-ie8compat svg csspositionsticky inlinesvg svgclippaths no-ie8compat svg csspositionsticky inlinesvg svgclippaths" lang="en"><head>
+<html class="js no-ie8compat svg csspositionsticky inlinesvg svgclippaths no-ie8compat svg csspositionsticky inlinesvg svgclippaths" lang="en"><head>
 
   </head>
 
@@ -9,12 +9,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <%# Social Media Logos %>
+    <%# Social Media Logos & Font %>
     <link href="https://fonts.googleapis.com/css?family=Roboto:900,900italic,700,700italic,400,400italic,300,300italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
     
-    <%# Theme %>
-    <link rel="stylesheet" href="//www.sitepoint.com/wp-content/themes/sitepoint/assets/stylesheets/styles-63620ced6374adfdc078b1a126c2f666.css?ver=4.9.8" type="text/css" media="all">
 <%# END OF SCRIPTS %>
 
 
@@ -34,35 +32,33 @@
 
 
 
+<div class= 'container-fluid'>
 
 <%# NAV BAR %>
-        <header class="main-header" role="banner">
-
-      <nav id="navigation-bar" class="l-d-f l-p-fix l-w-100">
-        <div class="l-d-f l-w-100 l-w-3col--3col l-w-4col--4col l-jc-sb l-mh-auto">
-          <section class="l-d-f l-ai-str l-jc-sta l-gs-ph2 l-gs-ph1--2col">
-
-
-
+  <div class='row align-items-start'>
+    <div class='fixed-top'>
 
             <%# LOGO PLACEMENT %>
-            <a class="l-d-f" href="localhost:3000">
-              <div class="l-d-f l-as-cen l-b-n">
-               <p>LOGO</p>
+            <div class='top-row col-lg-6'>
+              <div class='float-left'>
+                <a class="logo" href="localhost:3000">
+                  <p>LOGO</p>
+                </a>
               </div>
-            </a>
+            </div>
             <%# END OF LOGO PLACEMENT %>
 
-          </section>
+
 
 
 
 
           <%# MOBILE NAV BUTTON %>
-          <section id="hamburger-container" class="l-ai-cen l-d-f l-gs-ph1">
+          <section id="hamburger-container" class="hammy">
             <div class="hamburger">
               <div class="hamburger-box">
-                <div class="hamburger-inner"></div>
+                <div class="hamburger-inner">
+                </div>
               </div>
             </div>
           </section>
@@ -71,37 +67,29 @@
 
 
 
-          <section id="nav-container" class="l-ai-cen">
-            <ul id="nav" class="l-d-f l-w-100 l-ma0 l-fd-col">
-              <li class="l-gs-ph2 l-gs-ph1--2col t-ls-n">
+          <div class='top-row col-lg-6'>
+            <div class='float-right'>
+              <div class='span-4'>
+                  <%# Home %>
+                    <a href="/" data-text="Home">Home</a>
 
-              <%# Home %>
-              </li>
-              <li class="l-gs-ph2 l-gs-ph1--2col t-ls-n">
-                <a href="/" data-text="Home">Home</a>
-              </li>
+                  <%# Register %>
+                    <a href="/register" data-text="Register">Register</a>
 
-              <%# Register %>
-              <li class="l-gs-ph2 l-gs-ph1--2col t-ls-n">
-                <a href="/register" data-text="Register">Register</a>
-              </li>
+                  <%# Login %>
+                    <a href="/login" data-text="Login">Login</a>
 
-                <div class="l-d-f--2col">
-              
-              <%# Login %>
-              <li class="l-gs-ph2 l-gs-ph1--2col t-ls-n invert"><a href="/login" data-text="Login">Login</a>
-              </li>
+                  <%# Checkout %>
+                  <a href="/checkout"
+                     class="Button u-small u-pink l-as-cen l-d-n l-gs-ph1 l-gs-mh1 f-smaller f-small--3col">
+                     Checkout
+                  </a>
+              </div>
+            </div>
+          </div>
 
-              <%# Checkout %>
-              <a href="/checkout" class="Button u-small u-pink l-as-cen l-d-n l-gs-ph1 l-gs-mh1 f-smaller f-small--3col">Checkout</a>
-              
-                </div>
-            
-            </ul>
-          </section>
-        </div>
-      </nav>
-
+    </div>
+  </div>
 <%# END OF NAV BAR %>
 
 
@@ -320,4 +308,6 @@
 </footer>
 <%# END OF FOOTER %>
 
-</body></html>
+
+
+</div></body></html>
