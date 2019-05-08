@@ -48,7 +48,11 @@ Rails.application.routes.draw do
   get '/shoppingcarts' => 'shoppingcarts#index', as: 'shoppingcarts'
 
   # Edit item in cart (U)
-  post '/shoppingcarts/edit' => 'shoppingcarts#edit_item', as: 'shoppingcarts_edit'
+  # post '/shoppingcarts/edit' => 'shoppingcarts#edit_item', as: 'shoppingcarts_edit'
+
+  post '/shoppingcarts/plus' => 'shoppingcarts#plus_weight', as: 'shoppingcarts_plus'
+
+  post '/shoppingcarts/minus' => 'shoppingcarts#minus_weight', as: 'shoppingcarts_minus'
 
   # Delete item in cart (D)
   post '/shoppingcarts/delete' => 'shoppingcarts#delete_item', as: 'shoppingcarts_delete'
