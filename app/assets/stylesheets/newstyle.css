@@ -49,7 +49,7 @@ a {
   text-decoration: none;
 }
 
-.container {
+.container1 {
   max-width: 75em;
   width: 95%;
   margin: 40px auto;
@@ -79,7 +79,7 @@ a {
   margin-top: -2.5em;
 }
 
-.table {
+.table1 {
   background: #ffffff;
   border-radius: 0.6em;
   overflow: hidden;
@@ -92,11 +92,11 @@ a {
   display: inline-block;
 }
 
-.align-center {
+.align-center1 {
   text-align: center;
 }
 
-.th {
+.th1 {
   background: #1BDB4A;
   color: #fff;
   text-transform: uppercase;
@@ -104,7 +104,7 @@ a {
   font-size: 1.5em;
 }
 
-.tf {
+.tf1 {
   background: #1BDB4A;
   text-transform: uppercase;
   text-align: right;
@@ -116,25 +116,25 @@ a {
   font-weight: bold;
 }
 
-.col {
+.col1 {
   padding: 1em;
   width: 12%;
 }
 
-.col-pro {
+.col-pro1 {
   width: 44%;
 }
 
-.col-pro > * {
+.col-pro1 > * {
   vertical-align: middle;
 }
 
-.col-qty {
+.col-qty1 {
   text-align: center;
   width: 17%;
 }
 
-.col-numeric p {
+.col-numeric1 p {
   font: bold 1.8em lato;
 }
 
@@ -234,3 +234,11 @@ a.qty:hover {
 @media screen and ( max-width: 591px) {
 
 }
+
+ body {
+    padding-top: 56px;
+  }
+
+  .addCartButton {
+    padding: 10px;
+  }
