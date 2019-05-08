@@ -62,6 +62,11 @@ class OrdersController < ApplicationController
     render plain: session.id
   end
 
+
+  def new
+    @shopping_cart_items = session["cart"]
+  end
+
   def payment_webhook
     event_json = JSON.parse(request.body.read)
 
