@@ -6,15 +6,14 @@ def index
 
     @shopping_cart_items = session["cart"]
     puts @shopping_cart_items
-  end
 
-  def show
-  end
+    @shopping_cart_items = session["cart"]
 
-  def new
-  end
+    @payment_amount = 0
 
-  def create
+    session["cart"].each do |item|
+      @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+    end
   end
 
   def plus_weight
@@ -40,8 +39,6 @@ def index
   def edit_item
   end
 
-  def update
-  end
 
   def delete_item
     session["cart"].each do |durian|
