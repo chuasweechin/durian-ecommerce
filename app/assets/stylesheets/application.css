@@ -13,11 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
- body {
-    padding-top: 56px;
-  }
-  
-  .addCartButton {
-    padding: 10px;
-  }

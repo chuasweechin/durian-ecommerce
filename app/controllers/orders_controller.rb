@@ -14,6 +14,21 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
+  def new
+  end
+
+  def create
+  end
+
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
+  end
+
   def notification
     auth_token = ENV['TWILIO_API_KEY']
     account_sid = ENV['TWILIO_ACCOUNT_SID']
@@ -49,9 +64,7 @@ class OrdersController < ApplicationController
       payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
     end
 
-    # UUID implementation for txn id
-    p SecureRandom.uuid
-    p payment_amount
+    txn_id = SecureRandom.uuid
 
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
@@ -59,7 +72,7 @@ class OrdersController < ApplicationController
       payment_method_types: ['card'],
       line_items: [{
         name: 'Payment for Durian',
-        description: 'Order ID: ',
+        description: "Order ID: #{txn_id}",
         images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
         amount: payment_amount,
         currency: 'sgd',
@@ -72,17 +85,6 @@ class OrdersController < ApplicationController
     render plain: session.id
   end
 
-
-  def new
-    @shopping_cart_items = session["cart"]
-
-    @payment_amount = 0
-
-    session["cart"].each do |item|
-      @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
-    end
-  end
-
   def payment_webhook
     event_json = JSON.parse(request.body.read)
 
@@ -93,21 +95,8 @@ class OrdersController < ApplicationController
     render plain: "test webhook"
   end
 
-  def create
+private
+  def post_params
+    params.require(:order).permit(:name)
   end
-
-  def edit
-  end
-
-  def update
-  end
-
-  # def destroy
-  # end
-
-# private
-#   def post_params
-#     params.require(:order).permit(:name)
-#   end
-
 end

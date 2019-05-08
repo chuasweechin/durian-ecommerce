@@ -54,22 +54,20 @@
     	</td>
 
 
-				<td>
-						<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
+			<td>
+					<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
 
   					<%= form.hidden_field :id, :value => item["id"] %>
-
 						<%= form.submit 'Delete', class: "btn btn-warning"%>
-  					<% end %>
-       </td>
+					<% end %>
+     </td>
 
       </tr>
-<% end %>
-
+		<% end %>
 	</tbody>
 </table>
 
 
-
-
 <!-- Payment section -->
+<h1>Total Payment Amount: <%= "$" + (@payment_amount/100).to_s %></h1>
+<button type='button' class='btn btn-primary payment'>Payment</button>

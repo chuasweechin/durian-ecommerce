@@ -37,6 +37,7 @@
 
 <%= link_to 'Back', root_path, class: 'btn btn-primary' %>
 
+
 <% if @shopping_cart_items == nil %>
 	<a class='btn btn-warning' href='/shoppingcarts'>
 		0
@@ -48,3 +49,4 @@
 		<%= image_tag("https://img.icons8.com/material-outlined/24/000000/shopping-cart.png") %>
 	</a>
 <% end %>
+
