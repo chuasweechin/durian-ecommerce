@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   get '/durians/:id/edit' => 'durians#edit', as: 'edit_durian'
   patch '/durians/:id' => 'durians#update'
 
+  # Cookies Handlers
+  post '/durians/:id/cart' => 'durians#set_cookies', as: 'durians_cookies'
+
+
+
   # Routes for Order
   # Index page (Order)
   get '/orders' => 'orders#index', as: 'orders'
@@ -27,6 +32,8 @@ Rails.application.routes.draw do
   get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
   get '/orders/payment' => 'orders#payment', as: 'payment_webhook'
 
+  # Create (C) - Checkout page
+  get '/orders/new' => 'orders#new', as: 'new_order'
   post '/orders' => 'orders#create'
 
   # Update (U)
@@ -37,8 +44,6 @@ Rails.application.routes.draw do
   get '/orders/:id' => 'orders#show' , as: 'order'
 
 
-  # Routes for User
-  # Index page (User)
-  get '/users' => 'users#index', as: 'users'
+  # # Checkout page
 
 end
