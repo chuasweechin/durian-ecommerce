@@ -6,6 +6,8 @@ class DuriansController < ApplicationController
 
   def show
     @durian = Durian.find(params[:id])
+
+    @shopping_cart_items = session["cart"]
   end
 
   def new
