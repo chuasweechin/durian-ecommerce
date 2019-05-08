@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_08_063524) do
+ActiveRecord::Schema.define(version: 2019_05_08_075923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 2019_05_08_063524) do
     t.integer "price_per_kg"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.bigint "cream_id"
+    t.bigint "sweet_id"
+    t.index ["cream_id"], name: "index_durians_on_cream_id"
+    t.index ["sweet_id"], name: "index_durians_on_sweet_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -37,18 +42,14 @@ ActiveRecord::Schema.define(version: 2019_05_08_063524) do
     t.text "order_status"
     t.bigint "user_id"
     t.bigint "durian_id"
-    t.bigint "cream_id"
-    t.bigint "taste_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "charge_id"
-    t.index ["cream_id"], name: "index_orders_on_cream_id"
     t.index ["durian_id"], name: "index_orders_on_durian_id"
-    t.index ["taste_id"], name: "index_orders_on_taste_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "tastes", force: :cascade do |t|
+  create_table "sweets", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

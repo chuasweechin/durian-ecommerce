@@ -1,3 +1,3 @@
 class Cream < ActiveRecord::Base
-  has_many :order
+  has_many :durian
 end
