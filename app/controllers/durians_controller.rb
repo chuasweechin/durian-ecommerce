@@ -2,10 +2,6 @@ class DuriansController < ApplicationController
 
   def index
     @durians = Durian.all
-    # session["cart"] = []
-    # puts "HERE HERE HERE"
-    # byebug
-    # puts session["cart"]
   end
 
   def show
@@ -34,6 +30,33 @@ class DuriansController < ApplicationController
   end
 
   def destroy
+  end
+
+  def set_cookies
+    if !session["cart"].kind_of?(Array)
+      session["cart"] = []
+    end
+
+    found = false;
+
+    if session["cart"].length == 0
+      session["cart"] << post_params
+      found = true
+    else
+      session["cart"].each do |durian|
+        if durian["name"] == post_params["name"]
+          durian['weight'] = durian['weight'].to_i + post_params["weight"].to_i
+          durian['weight'] = durian['weight'].to_s
+          found = true
+        end
+      end
+    end
+
+    if found == false
+      session["cart"] << post_params
+    end
+
+    redirect_to durian_path
   end
 
 private

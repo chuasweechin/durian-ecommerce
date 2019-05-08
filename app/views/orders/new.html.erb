@@ -1,1 +1,38 @@
-<h1>Welcome to orders page</h1>
+<h1>Durian orders</h1><br/>
+
+<!-- Shopping Cart Orders -->
+<table class="table table-striped">
+	<thead>
+	  <tr>
+	  	<th scope="col">S/N</th>
+	    <th scope="col">Name</th>
+	    <th scope="col">Price Per Kg</th>
+	    <th scope="col">Weight In Kg</th>
+	  </tr>
+	</thead>
+
+	<tbody>
+    <% @shopping_cart_items.each_with_index do |item, index| %>
+      <tr>
+      	<td>
+        	<%= index + 1 %>
+        </td>
+        <td>
+        	<%= item["name"] %>
+        </td>
+
+        <td>
+        	<%= "$" + (item["price_per_kg"].to_i/100).to_s %>
+        </td>
+
+         <td>
+        	<%= item["weight"] + " kg" %>
+        </td>
+      </tr>
+    <% end %>
+	</tbody>
+</table>
+
+<h1>Total Payment Amount: <%= "$" + (@payment_amount/100).to_s %></h1>
+
+<button type='button' class='btn btn-primary payment'>Payment</button>
