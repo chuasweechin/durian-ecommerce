@@ -9,6 +9,7 @@
 	    <th scope="col">Name</th>
 	    <th scope="col">Price Per Kg</th>
 	    <th scope="col">Weight</th>
+	    <th scope="col">Total Price</th>
 	    <th scope="col">Actions</th>
 	  </tr>
 	</thead>
@@ -24,7 +25,7 @@
         </td>
 
         <td>
-        	<%= "$" + item["price_per_kg"].to_s %>
+        	<%= "$" + (item["price_per_kg"].to_i/100).to_s %>
         </td>
 
      		<td>
@@ -39,7 +40,7 @@
 								</div>
 
 						<div class="col-md-3">
-						<%= item["weight"] + "kg" %>
+							<%= item["weight"] + "kg" %>
 						</div>
 
 						<div class="col-md-3">
@@ -52,6 +53,11 @@
 						</div>
 				</div>
     	</td>
+
+
+        <td>
+					<%= "$" + ((item["price_per_kg"].to_i * item["weight"].to_i)/100).to_s %>
+				</td>
 
 
 			<td>
