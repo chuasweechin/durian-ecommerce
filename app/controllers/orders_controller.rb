@@ -64,7 +64,6 @@ class OrdersController < ApplicationController
 
 
   def new
-    @shopping_cart_items = session["cart"]
   end
 
   def payment_webhook
@@ -80,8 +79,8 @@ class OrdersController < ApplicationController
   def create
   end
 
-  # def edit
-  # end
+  def edit
+  end
 
   def update
   end

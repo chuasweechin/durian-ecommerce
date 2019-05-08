@@ -1,0 +1,61 @@
+<h1>Shopping Cart</h1><br/>
+
+<!-- Shopping Cart Orders -->
+
+<table class="table table-striped">
+	<thead>
+	  <tr>
+	  	<th scope="col">S/N</th>
+	    <th scope="col">Name</th>
+	    <th scope="col">Price Per Kg</th>
+	    <th scope="col">Weight</th>
+	    <th scope="col">Actions</th>
+	  </tr>
+	</thead>
+
+	<tbody>
+    <% @shopping_cart_items.each_with_index do |item, index| %>
+      <tr>
+      	<td>
+        	<%= index + 1 %>
+        </td>
+        <td>
+        	<%= item["name"] %>
+        </td>
+
+        <td>
+        	<%= "$" + item["price_per_kg"].to_s %>
+        </td>
+
+         <td>
+        	<%= item["weight"] + "kg" %>
+        </td>
+
+				<td>
+	<%= form_with scope: :durian, url: shoppingcarts_edit_path, local: true do |form| %>
+
+  <%= form.hidden_field :id, :value => item["id"] %>
+
+  <%= form.submit 'Edit', class: "btn btn-warning"%>
+  <% end %>
+
+
+	<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
+
+  <%= form.hidden_field :id, :value => item["id"] %>
+
+	<%= form.submit 'Delete', class: "btn btn-danger"%>
+  <% end %>
+
+       </td>
+
+      </tr>
+<% end %>
+
+	</tbody>
+</table>
+
+
+
+
+<!-- Payment section -->
