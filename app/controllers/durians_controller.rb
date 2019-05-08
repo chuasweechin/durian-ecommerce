@@ -1,9 +1,9 @@
 class DuriansController < ApplicationController
 
   def index
-    puts "HERE LA!"
-    puts session["cart"].inspect
-    puts session["cart"].length
+    # puts "HERE LA!"
+    # puts session["cart"].inspect
+    # puts session["cart"].length
     @durians = Durian.all
     # session["cart"] = []
     # puts session["cart"]
