@@ -39,7 +39,8 @@ input {
 }
 
 img {
-  max-width: 9em;
+  max-width: 100em;
+  max-height: 25em;
   width: 100%;
   overflow: hidden;
   margin-right: 1em;
@@ -235,10 +236,14 @@ a.qty:hover {
 
 }
 
- body {
-    padding-top: 56px;
-  }
+body {
+  padding-top: 90px;
+}
 
-  .addCartButton {
-    padding: 10px;
-  }
+.addCartButton {
+  padding: 10px;
+}
+
+.carouselImage {
+  padding-bottom: 19px;
+}
