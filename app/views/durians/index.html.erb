@@ -33,13 +33,14 @@
       <!-- End: Hero Banner -->
 
       <div class="row">
+
       	<% @durians.each do |durian| %>
 	      	<div class="col-lg-4 col-md-6 mb-4">
 	          <div class="card h-100">
-	            <a href="#"><img class="card-img-top" src="https://i.imgur.com/jKMQZyT.jpg" alt=""></a>
+	            <img class="card-img-top" src="https://i.imgur.com/jKMQZyT.jpg" alt="">
 	            <div class="card-body">
 	              <h4 class="card-title">
-	                <a href="#"><%= durian.name %></a>
+	                <%= durian.name %>
 	              </h4>
 	              <h5><%= "$" + (durian.price_per_kg/100).to_s %>/kg</h5>
 	              <p class="card-text"><%= durian.description %></p>
@@ -57,6 +58,7 @@
 	          </div>
 	        </div>
 	      <% end %>
+
       </div>
       <!-- /.row -->
     </div>
@@ -65,67 +67,3 @@
   <!-- /.row -->
 </div>
 <!-- End: Page Content -->
-
-
-<!-- Bootstrap core JavaScript -->
-<!-- NOT WORKING!! -->
-<script src="jquery.min.js"></script>
-<script src="bootstrap.bundle.min.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <h1>Durian Listing</h1>
-
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">S/N</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price Per Kg</th>
-        <th scope="col">Select</th>
-      </tr>
-
-    </thead>
-
-    <tbody>
-      <% @durians.each_with_index do |durian, index| %>
-        <tr>
-          <td>
-            <%= index + 1 %>
-          </td>
-          <td>
-            <%= durian.name %>
-          </td>
-
-          <td>
-            <%= "$" + (durian.price_per_kg/100).to_s %>
-          </td>
-
-          <td>
-            <%= link_to 'Select this durian', durian_path(durian.id), class: 'btn btn-primary' %>
-          </td>
-
-
-        </tr>
-      <% end %>
-
-    </tbody>
-  </table>
