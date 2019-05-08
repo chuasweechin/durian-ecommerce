@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
   get '/orders/payment' => 'orders#payment', as: 'orders_payment'
 
+  # Create (C) - Checkout page
+  get '/orders/new' => 'orders#new', as: 'new_order'
   post '/orders' => 'orders#create'
 
   # Update (U)
@@ -40,5 +42,8 @@ Rails.application.routes.draw do
 
   # Read (R)
   get '/orders/:id' => 'orders#show' , as: 'order'
+
+
+  # # Checkout page
 
 end
