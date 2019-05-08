@@ -27,26 +27,40 @@
         	<%= "$" + item["price_per_kg"].to_s %>
         </td>
 
-         <td>
-        	<%= item["weight"] + "kg" %>
-        </td>
+     		<td>
+						<div class="form-row">
+								<div class="col-md-3">
+								<%= form_with scope: :durian, url: shoppingcarts_plus_path, local: true do |form| %>
+
+  							<%= form.hidden_field :id, :value => item["id"] %>
+
+  							<%= form.submit '+', class: "btn btn-success"%>
+  							<% end %>
+								</div>
+
+						<div class="col-md-3">
+						<%= item["weight"] + "kg" %>
+						</div>
+
+						<div class="col-md-3">
+  					<%= form_with scope: :durian, url: shoppingcarts_minus_path, local: true do |form| %>
+
+  					<%= form.hidden_field :id, :value => item["id"] %>
+
+  					<%= form.submit '-', class: "btn btn-danger"%>
+  					<% end %>
+						</div>
+				</div>
+    	</td>
+
 
 				<td>
-	<%= form_with scope: :durian, url: shoppingcarts_edit_path, local: true do |form| %>
+						<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
 
-  <%= form.hidden_field :id, :value => item["id"] %>
+  					<%= form.hidden_field :id, :value => item["id"] %>
 
-  <%= form.submit 'Edit', class: "btn btn-warning"%>
-  <% end %>
-
-
-	<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
-
-  <%= form.hidden_field :id, :value => item["id"] %>
-
-	<%= form.submit 'Delete', class: "btn btn-danger"%>
-  <% end %>
-
+						<%= form.submit 'Delete', class: "btn btn-warning"%>
+  					<% end %>
        </td>
 
       </tr>

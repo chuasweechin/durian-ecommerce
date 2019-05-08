@@ -1,45 +1,52 @@
 class ShoppingcartsController < ApplicationController
 
 def index
-    puts "HERE LA!"
     puts session["cart"].inspect
     puts session["cart"].length
 
     @shopping_cart_items = session["cart"]
-    puts "HERE HERE"
     puts @shopping_cart_items
   end
 
   def show
-    # @durian = Durian.find(params[:id])
   end
 
   def new
   end
 
   def create
-    # @durian = Durian.new(post_params)
-    # @durian.save
+  end
 
-    # redirect_to @durian
+  def plus_weight
+    session["cart"].each do |durian|
+      if durian["id"] == post_params["id"]
+        durian["weight"] = durian["weight"].to_i + 1
+        durian["weight"] = durian['weight'].to_s
+        redirect_to shoppingcarts_path
+      end
+    end
+  end
+
+  def minus_weight
+    session["cart"].each do |durian|
+      if durian["id"] == post_params["id"]
+        durian["weight"] = durian["weight"].to_i - 1
+        durian["weight"] = durian['weight'].to_s
+        redirect_to shoppingcarts_path
+      end
+    end
   end
 
   def edit_item
-    puts "EDITED ITEM"
-    puts post_params
   end
 
   def update
   end
 
   def delete_item
-    puts "DELETED ITEM"
-    puts post_params
-
     session["cart"].each do |durian|
       if durian["id"] == post_params["id"]
         session["cart"].delete_if { |hash| hash["id"] == post_params["id"] }
-        # byebug
         redirect_to shoppingcarts_path
       end
     end
@@ -52,8 +59,6 @@ def index
 
 
   found = false;
-  puts "HEY LOOK HERE!"
-  puts post_params
 
   if session["cart"].length == 0
     session["cart"] << post_params
@@ -72,8 +77,6 @@ def index
     session["cart"] << post_params
   end
 
-
-# byebug
   redirect_to durian_path
   end
 
