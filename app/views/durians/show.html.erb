@@ -1,6 +1,12 @@
 <h1>Show Durian</h1>
 
-<%= form_with scope: :durian, url: durians_cookies_path, local: true do |form| %>
+<%= form_with scope: :durian, url: shoppingcarts_add_path, local: true do |form| %>
+
+<p>
+
+		<%= form.hidden_field :id, :value => @durian.id %>
+  </p>
+
   <p>
     <%= form.label :name, 'Durian Name' %><br>
 		<%= @durian.name %>
@@ -11,13 +17,13 @@
 
   <p>
     <%= form.label :price_per_kg, 'Price Per Kg' %><br>
-    <%= @durian.price_per_kg %>
+    <%= "$" + (@durian.price_per_kg/100).to_s %>
 
     <%= form.hidden_field :price_per_kg, :value => @durian.price_per_kg %>
   </p>
 
 	<p>
-    <%= form.label :weight, 'Weight' %><br>
+    <%= form.label :weight, 'Weight In Kg' %><br>
     <%= form.number_field :weight %>
   </p>
 
@@ -31,7 +37,7 @@
 
 <%= link_to 'Back', root_path, class: 'btn btn-primary' %>
 
-<a class='btn btn-warning' href='/orders/new'>
+<a class='btn btn-warning' href='/shoppingcarts'>
 <%= session["cart"].length %>
 <%= image_tag("https://img.icons8.com/material-outlined/24/000000/shopping-cart.png") %>
 </a>

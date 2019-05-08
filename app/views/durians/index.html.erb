@@ -72,7 +72,7 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9734;</small>
                   <br>
@@ -120,7 +120,7 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9734; &#9734; &#9734;</small>
                   <br>
@@ -144,7 +144,7 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9734;</small>
                   <br>
@@ -169,7 +169,7 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9734; &#9734;</small>
                   <br>
@@ -193,7 +193,7 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9733;</small>
                   <br>
@@ -201,7 +201,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Durian 7 -->
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
@@ -217,7 +217,7 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9733;</small>
                   <br>
@@ -242,14 +242,14 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9733;</small>
                   <br>
                   <small class="text-muted">Creaminess &#9733; &#9733; &#9733; &#9733; &#9733;</small>
                 </div>
               </div>
-            </div> 
+            </div>
 
             <!-- Durian 9 -->
             <div class="col-lg-4 col-md-6 mb-4">
@@ -266,7 +266,7 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9733;</small>
                   <br>
@@ -274,7 +274,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Durian 10 -->
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
@@ -290,14 +290,14 @@
                     <div class="float-right">
                       <button type = "button" class="btn btn-success btn-sm" href="#">Add to cart</a>
                     </div>
-                  </div>              
+                  </div>
                 <div class="card-footer">
                   <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9733;</small>
                   <br>
                   <small class="text-muted">Creaminess &#9733; &#9733; &#9733; &#9733; &#9733;</small>
                 </div>
               </div>
-            </div>  
+            </div>
 
           </div>
           <!-- /.row -->
@@ -361,10 +361,10 @@
           </td>
           <td>
             <%= durian.name %>
-          </td>   
+          </td>
 
           <td>
-            <%= "$" + durian.price_per_kg.to_s %>
+            <%= "$" + (durian.price_per_kg/100).to_s %>
           </td>
 
           <td>
@@ -379,11 +379,10 @@
   </table>
 
   <br/>
-  <%= link_to 'Add new durian', new_durian_path, class: 'btn btn-primary' %>
   <%= link_to 'Notification', orders_notification_path, class: 'btn btn-primary' %>
   <%= link_to 'Postal Code', orders_postal_code_path, class: 'btn btn-primary' %>
 
-  <button type='button' class='btn btn-primary payment'>Payment</button>
+
 
   <br/>
   <br/>
@@ -397,4 +396,3 @@
     <%= link_to 'Log In', new_user_session_url, class: 'btn btn-secondary'%>
   <% end %>
   <%# END OF SWEE CHIN %>
-
