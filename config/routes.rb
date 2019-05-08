@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   get '/orders/notification' => 'orders#notification', as: 'orders_notification'
   get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
-  get '/orders/payment' => 'orders#payment', as: 'orders_payment'
+  get '/orders/payment' => 'orders#payment', as: 'payment_webhook'
 
   # Create (C) - Checkout page
   get '/orders/new' => 'orders#new', as: 'new_order'

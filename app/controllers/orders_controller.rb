@@ -4,6 +4,8 @@ require 'net/http'
 require 'twilio-ruby'
 
 class OrdersController < ApplicationController
+  skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
+
   def index
     @orders = Order.all
   end
@@ -11,8 +13,6 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
   end
-
-
 
   def notification
     auth_token = ENV['TWILIO_API_KEY']
@@ -28,8 +28,8 @@ class OrdersController < ApplicationController
     render plain: "Sent!"
   end
 
- def postal_code
-    url = 'https://developers.onemap.sg/commonapi/search?searchVal=763335&returnGeom=N&getAddrDetails=Y'
+  def postal_code
+    url = 'https://developers.onemap.sg/commonapi/search?searchVal=510578&returnGeom=N&getAddrDetails=Y'
     uri = URI(url)
     response = Net::HTTP.get(uri)
 
@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
         images: ['https://example.com/t-shirt.png'],
         amount: 2000,
         currency: 'sgd',
-        quantity: 1,
+        quantity: 1
       }],
       success_url: 'http://localhost:3000',
       cancel_url: 'http://localhost:3000',
@@ -62,8 +62,19 @@ class OrdersController < ApplicationController
     render plain: session.id
   end
 
+
   def new
     @shopping_cart_items = session["cart"]
+  end
+
+  def payment_webhook
+    event_json = JSON.parse(request.body.read)
+
+    # Do something with event_json
+    p event_json["data"]["object"]["payment_intent"]
+
+    # Return a response to acknowledge receipt of the event
+    render plain: "test webhook"
   end
 
   def create
