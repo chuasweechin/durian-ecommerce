@@ -37,7 +37,14 @@
 
 <%= link_to 'Back', root_path, class: 'btn btn-primary' %>
 
-<a class='btn btn-warning' href='/shoppingcarts'>
-<%= session["cart"].length %>
-<%= image_tag("https://img.icons8.com/material-outlined/24/000000/shopping-cart.png") %>
-</a>
+<% if @shopping_cart_items == nil %>
+	<a class='btn btn-warning' href='/shoppingcarts'>
+		0
+		<%= image_tag("https://img.icons8.com/material-outlined/24/000000/shopping-cart.png") %>
+	</a>
+<% else %>
+	<a class='btn btn-warning' href='/shoppingcarts'>
+		<%= @shopping_cart_items.length %>
+		<%= image_tag("https://img.icons8.com/material-outlined/24/000000/shopping-cart.png") %>
+	</a>
+<% end %>
