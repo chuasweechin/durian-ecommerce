@@ -49,7 +49,9 @@ class OrdersController < ApplicationController
       payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
     end
 
-    puts payment_amount
+    # UUID implementation for txn id
+    p SecureRandom.uuid
+    p payment_amount
 
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
