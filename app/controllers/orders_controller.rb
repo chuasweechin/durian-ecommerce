@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
       body: "Hello World!"
     )
 
-    render plain: "Sent!"
+    render plain: "SMS Sent!"
   end
 
   def postal_code
@@ -43,15 +43,23 @@ class OrdersController < ApplicationController
   end
 
   def payment
+    payment_amount = 0
+
+    session["cart"].each do |item|
+      payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+    end
+
+    puts payment_amount
+
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: [{
-        name: 'MSW',
-        description: '10kg MSW Durian',
-        images: ['https://example.com/t-shirt.png'],
-        amount: 2000,
+        name: 'Payment for Durian',
+        description: 'Order ID: ',
+        images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
+        amount: payment_amount,
         currency: 'sgd',
         quantity: 1
       }],
@@ -65,6 +73,13 @@ class OrdersController < ApplicationController
 
   def new
     @shopping_cart_items = session["cart"]
+
+    @payment_amount = 0
+
+    session["cart"].each do |item|
+      @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+    end
+
   end
 
   def payment_webhook

@@ -7,7 +7,7 @@
 	  	<th scope="col">S/N</th>
 	    <th scope="col">Name</th>
 	    <th scope="col">Price Per Kg</th>
-	    <th scope="col">Weight</th>
+	    <th scope="col">Weight In Kg</th>
 	  </tr>
 	</thead>
 
@@ -22,19 +22,17 @@
         </td>
 
         <td>
-        	<%= "$" + item["price_per_kg"].to_s %>
+        	<%= "$" + (item["price_per_kg"].to_i/100).to_s %>
         </td>
 
          <td>
-        	<%= item["weight"] + "kg" %>
+        	<%= item["weight"] + " kg" %>
         </td>
-
-
       </tr>
     <% end %>
-
 	</tbody>
 </table>
 
+<h1>Total Payment Amount: <%= "$" + (@payment_amount/100).to_s %></h1>
 
-<!-- Payment section -->
+<button type='button' class='btn btn-primary payment'>Payment</button>
