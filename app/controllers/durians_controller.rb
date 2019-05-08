@@ -61,7 +61,7 @@ class DuriansController < ApplicationController
 
 private
   def post_params
-    params.require(:durian).permit(:name, :price_per_kg, :weight)
+    params.require(:durian).permit(:name, :price_per_kg)
   end
 
 end

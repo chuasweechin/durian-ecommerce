@@ -18,8 +18,6 @@ Rails.application.routes.draw do
   get '/durians/:id/edit' => 'durians#edit', as: 'edit_durian'
   patch '/durians/:id' => 'durians#update'
 
-  # Cookies Handlers
-  post '/durians/:id/cart' => 'durians#set_cookies', as: 'durians_cookies'
 
 
 
@@ -44,6 +42,18 @@ Rails.application.routes.draw do
   get '/orders/:id' => 'orders#show' , as: 'order'
 
 
-  # # Checkout page
+  # # Shopping Cart page
+  # Routes for Shopping Cart
+  # Index page (Shopping Cart)
+  get '/shoppingcarts' => 'shoppingcarts#index', as: 'shoppingcarts'
+
+  # Edit item in cart (U)
+  post '/shoppingcarts/edit' => 'shoppingcarts#edit_item', as: 'shoppingcarts_edit'
+
+  # Delete item in cart (D)
+  post '/shoppingcarts/delete' => 'shoppingcarts#delete_item', as: 'shoppingcarts_delete'
+
+  # Cookies Handlers
+  post '/shoppingcarts/:id/cart' => 'shoppingcarts#add_item', as: 'shoppingcarts_add'
 
 end

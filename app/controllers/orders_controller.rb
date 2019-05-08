@@ -79,7 +79,6 @@ class OrdersController < ApplicationController
     session["cart"].each do |item|
       @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
     end
-
   end
 
   def payment_webhook
@@ -95,8 +94,8 @@ class OrdersController < ApplicationController
   def create
   end
 
-  # def edit
-  # end
+  def edit
+  end
 
   def update
   end
