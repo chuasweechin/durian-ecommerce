@@ -4,6 +4,57 @@
 </div>
 </section>
 
+<h2>Order Details</h2>
+
+<div class="container">
+	<div class="row">
+		<div class="col-3">
+  		Name: <%= session["delivery_details"]["name"]%>
+		</div>
+		<div class="col-3">
+  		Email: <%= session["delivery_details"]["email"]%>
+		</div>
+		<div class="col-3">
+  		Contact Number: <%= session["delivery_details"]["contact_number"]%>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-9">
+  		Comments: <%= session["delivery_details"]["comment"]%>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-4">
+  		Postal Code: <%= session["delivery_details"]["postal_code"]%>
+		</div>
+
+		<div class="col-4">
+			Unit Number: <%= session["delivery_details"]["unit_number"]%>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-8">
+			Address: <%= session["delivery_details"]["address"]%>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-4">
+			Delivery Date: <%= session["delivery_details"]["date"]%>
+		</div>
+
+		<div class="col-4">
+			Delivery Time: <%= session["delivery_details"]["time"] %>
+		</div>
+	</div>
+</div>
+
+
+
+
 <div class="row">
     <div class="col-12">
         <div class="table-responsive">
@@ -61,5 +112,5 @@
     </div>
 </div>
 
-<a href="/shoppingcarts/checkout" class='btn btn-info'>Back</a>
-<button type='button' class='btn btn-primary' id='payment'>Payment</button>
+<a href="/shoppingcarts/checkout" class='btn btn-info'>Back to Checkout</a>
+<button type='button' class='btn btn-primary' id='payment'>Confirm Order</button>
