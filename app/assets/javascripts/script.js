@@ -12,16 +12,38 @@ window.onload = function() {
             });
     };
 
+    var addressSearchRequestHandler = function() {
+        document.querySelector('#delivery-address').value = JSON.parse(this.responseText).results[0].ADDRESS.toLowerCase();
+    };
+
     var paymentEventHandler = function() {
         var request = new XMLHttpRequest();
+        var deliveryAddress = document.querySelector('#delivery-address').value
 
         request.addEventListener("load", paymentCheckoutRequestHandler);
-        request.open("GET", `/orders/payment?address=${document.querySelector('#delivery-address').value}`);
+        request.open("GET", `/orders/payment?address=${ deliveryAddress }`);
 
         request.send();
     };
 
-    if (document.querySelector('.payment') !== null) {
-        document.querySelector('.payment').addEventListener('click', paymentEventHandler)
+    var postalCodeEventHandler = function() {
+        var request = new XMLHttpRequest();
+        var postalCode = document.querySelector('#postal-code').value
+
+        if (postalCode.length === 6) {
+            request.addEventListener("load", addressSearchRequestHandler);
+
+            request.open("GET", `https://developers.onemap.sg/commonapi/search?searchVal=${ postalCode }&returnGeom=N&getAddrDetails=Y`);
+
+            request.send();
+        }
+    };
+
+    if (document.querySelector('#payment') !== null) {
+        document.querySelector('#payment').addEventListener('click', paymentEventHandler)
+    }
+
+    if (document.querySelector('#postal-code') !== null) {
+        document.querySelector('#postal-code').addEventListener('keyup', postalCodeEventHandler)
     }
 };
