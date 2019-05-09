@@ -10,28 +10,7 @@ class OrdersController < ApplicationController
 
   skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
 
-  def index
-  end
-
-  def show
-  end
-
-  def new
-  end
-
-  def create
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
-  def notification
+  def send_sms_invoice ()
     client = Twilio::REST::Client.new(account_sid, auth_token)
 
     client.messages.create(
@@ -45,46 +24,52 @@ class OrdersController < ApplicationController
 
   def payment
     if shopping_cart_valid? == true
+      payment_name = ""
       payment_amount = 0
       txn_id = SecureRandom.uuid
 
-      @delivery = Delivery.new(name: item["weight"],
-                           email: item["price_per_kg"].to_i * item["weight"].to_i,
-                           contact_number: DateTime.current(),
-                           delivery_comment: txn_id,
-                           delivery_address: request.query_parameters[:address],
-                           postal_code: "created",
-                           unit_number: @durian,
-                           delivery_date: @durian,
-                           delivery_time: @durian)
+      # create delivery record in database
+      @delivery = Delivery.new(name: session["delivery_details"]["name"],
+                           email: session["delivery_details"]["email"],
+                           contact_number: session["delivery_details"]["contact_number"],
+                           delivery_comment: session["delivery_details"]["comment"],
+                           delivery_address: session["delivery_details"]["address"],
+                           postal_code: session["delivery_details"]["postal_code"],
+                           unit_number: session["delivery_details"]["unit_number"],
+                           delivery_date: session["delivery_details"]["date"],
+                           delivery_time: session["delivery_details"]["time"])
+      @delivery.save
 
-
+      # create order record in database with created status
       session["cart"].each do |item|
+        @durian = Durian.find(item["id"])
+
+        payment_name += @durian.name + ", "
+        payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+
         @order = Order.new(weight_in_kg: item["weight"],
                            payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
                            txn_date: DateTime.current(),
                            txn_id: txn_id,
-                           delivery_address: request.query_parameters[:address],
                            order_status: "created",
-                           delivery: @delivery
-                           durian: Durian.find(item["id"]))
+                           delivery: @delivery,
+                           durian: @durian)
 
-        @order.save
-        payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+         @order.save
       end
 
-
+      # create stripe checkout session
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
         line_items: [{
-          name: 'Payment for Durian',
+          name: "Payment for #{ payment_name.chomp(",") } Durian",
           description: "Order ID: #{ txn_id }",
           images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
           amount: payment_amount,
           currency: 'sgd',
           quantity: 1
         }],
-        success_url: "http://localhost:3000",
+        success_url: "http://localhost:3000/orders/payment/success/#{ txn_id }",
         cancel_url: "http://localhost:3000"
       )
 
@@ -93,6 +78,11 @@ class OrdersController < ApplicationController
     else
       render plain: "something is wrong with the shopping cart"
     end
+  end
+
+  def payment_success
+    @order_id = params[:id]
+    session["cart"] = []
   end
 
   def payment_webhook
@@ -106,6 +96,8 @@ class OrdersController < ApplicationController
     @orders.each do |order|
        order.update(order_status: 'paid', charge_id: event_json["data"]["object"]["payment_intent"])
     end
+
+    # call send invoice method pass, in the @orders for processing
 
     render plain: "webhook"
   end
