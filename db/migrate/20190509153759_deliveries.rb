@@ -4,13 +4,12 @@ class Deliveries < ActiveRecord::Migration[5.2]
       t.text :name
       t.text :email
       t.text :contact_number
-      t.text :delivery_omment
+      t.text :delivery_comment
       t.text :delivery_address
       t.text :postal_code
       t.text :unit_number
-      t.text :address
-      t.date :delivery_date
-      t.time :delivery_time
+      t.text :delivery_date
+      t.text :delivery_time
       t.timestamps
     end
   end

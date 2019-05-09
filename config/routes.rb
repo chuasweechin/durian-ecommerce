@@ -6,8 +6,6 @@ Rails.application.routes.draw do
 
   # Routes for Order
   get '/orders/payment' => 'orders#payment', as: 'payment'
-  get '/orders/notification' => 'orders#notification', as: 'orders_notification'
-
   post '/orders/payment/webhook' => 'orders#payment_webhook'
 
   # Routes for Shopping Cart

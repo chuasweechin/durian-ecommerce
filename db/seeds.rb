@@ -28,7 +28,7 @@ p "SEEDED SWEET DATA"
 
 Durian.destroy_all
 
-Durian.create(name: "Mao Shan Wang", price_per_kg: 1800, description: "The king of durians. Coconuts are not nuts, they are giant fruits.", price_per_kg: 1800, cream_id: 3, sweet_id: 4, image_url: "https://i.imgur.com/jKMQZyT.jpg")
+Durian.create(name: "Mao Shan Wang", price_per_kg: 1800, description: "The king of durians. Coconuts are not nuts, they are giant fruits.", cream_id: 3, sweet_id: 4, image_url: "https://i.imgur.com/jKMQZyT.jpg")
 Durian.create(name: "D24", price_per_kg: 1200, description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.", cream_id: 5, sweet_id: 3, image_url: "https://i.imgur.com/PRcdmr3.jpg")
 Durian.create(name: "D13", price_per_kg: 1000, description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!", cream_id: 4, sweet_id: 2, image_url: "https://i.imgur.com/3UYCLKQ.jpg")
 Durian.create(name: "Jin Feng (Golden Phoenix)", price_per_kg: 1800, description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.", cream_id: 4, sweet_id: 4, image_url: "https://i.imgur.com/kNdVCaD.jpg")

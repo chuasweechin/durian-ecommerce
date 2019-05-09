@@ -48,20 +48,31 @@ class OrdersController < ApplicationController
       payment_amount = 0
       txn_id = SecureRandom.uuid
 
+      @delivery = Delivery.new(name: item["weight"],
+                           email: item["price_per_kg"].to_i * item["weight"].to_i,
+                           contact_number: DateTime.current(),
+                           delivery_comment: txn_id,
+                           delivery_address: request.query_parameters[:address],
+                           postal_code: "created",
+                           unit_number: @durian,
+                           delivery_date: @durian,
+                           delivery_time: @durian)
+
+
       session["cart"].each do |item|
-        # @durian = Durian.find(item["id"])
+        @order = Order.new(weight_in_kg: item["weight"],
+                           payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
+                           txn_date: DateTime.current(),
+                           txn_id: txn_id,
+                           delivery_address: request.query_parameters[:address],
+                           order_status: "created",
+                           delivery: @delivery
+                           durian: Durian.find(item["id"]))
 
-        # @order = Order.new(weight_in_kg: item["weight"],
-        #                    payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
-        #                    txn_date: DateTime.current(),
-        #                    txn_id: txn_id,
-        #                    delivery_address: request.query_parameters[:address],
-        #                    order_status: "created",
-        #                    durian: @durian)
-
-        # @order.save
+        @order.save
         payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
       end
+
 
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
@@ -78,6 +89,7 @@ class OrdersController < ApplicationController
       )
 
       render plain: session.id
+
     else
       render plain: "something is wrong with the shopping cart"
     end
