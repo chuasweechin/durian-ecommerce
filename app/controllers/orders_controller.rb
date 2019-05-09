@@ -4,6 +4,10 @@ require 'net/http'
 require 'twilio-ruby'
 
 class OrdersController < ApplicationController
+  auth_token = ENV['TWILIO_API_KEY']
+  account_sid = ENV['TWILIO_ACCOUNT_SID']
+  Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+
   skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
 
   def index
@@ -30,8 +34,6 @@ class OrdersController < ApplicationController
   end
 
   def notification
-    auth_token = ENV['TWILIO_API_KEY']
-    account_sid = ENV['TWILIO_ACCOUNT_SID']
     client = Twilio::REST::Client.new(account_sid, auth_token)
 
     client.messages.create(
@@ -59,14 +61,25 @@ class OrdersController < ApplicationController
 
   def payment
     payment_amount = 0
+    txn_id = SecureRandom.uuid
+    @user = User.find(current_user.id)
 
+    # create payment order in the system
     session["cart"].each do |item|
+      @durian = Durian.find(item["id"])
+
+      @order = Order.new(weight_in_kg: item["weight"],
+                         payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
+                         txn_date: DateTime.current(),
+                         txn_id: txn_id,
+                         delivery_address: "somewhere",
+                         order_status: "processing",
+                         user: @user,
+                         durian: @durian)
+
+      @order.save
       payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
     end
-
-    txn_id = SecureRandom.uuid
-
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
