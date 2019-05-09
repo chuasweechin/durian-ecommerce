@@ -73,7 +73,7 @@ def index
 
 private
   def post_params
-    params.require(:durian).permit(:id, :name, :price_per_kg, :weight)
+    params.require(:durian).permit(:id, :name, :price_per_kg, :weight, :image_url)
   end
 
 end
