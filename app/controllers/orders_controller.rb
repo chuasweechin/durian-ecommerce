@@ -15,7 +15,10 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+    @shopping_cart_items = session["cart"]
+
+    @orders = Order.where(txn_id: params[:id], user: current_user.id)
+    p @orders
   end
 
   def new
@@ -61,6 +64,7 @@ class OrdersController < ApplicationController
 
   def payment
     payment_amount = 0
+
     txn_id = SecureRandom.uuid
     @user = User.find(current_user.id)
 
@@ -94,7 +98,7 @@ class OrdersController < ApplicationController
         quantity: 1
       }],
       success_url: "http://localhost:3000/orders/#{ txn_id }",
-      cancel_url: "http://localhost:3000",
+      cancel_url: "http://localhost:3000"
     )
 
     render plain: session.id
@@ -103,10 +107,15 @@ class OrdersController < ApplicationController
   def payment_webhook
     event_json = JSON.parse(request.body.read)
 
-    # Do something with event_json
-    p event_json["data"]["object"]["payment_intent"]
+    txn_id = event_json["data"]["object"]["display_items"][0]["custom"]["description"].split(": ")[1]
+    charge_id = event_json["data"]["object"]["payment_intent"]
 
-    # Return a response to acknowledge receipt of the event
-    render plain: "test webhook"
+    @orders = Order.where(txn_id: txn_id)
+
+    @orders.each do |order|
+       order.update(order_status: 'paid', charge_id: event_json["data"]["object"]["payment_intent"])
+    end
+
+    render plain: "webhook"
   end
 end

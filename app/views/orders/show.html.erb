@@ -1,1 +1,3 @@
-<%= @order %>
+<%  @orders.each do |order| %>
+	<%= order.payment_amount %>
+<% end %>

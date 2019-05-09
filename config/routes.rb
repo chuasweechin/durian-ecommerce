@@ -4,29 +4,19 @@ Rails.application.routes.draw do
   root 'durians#index'
 
   # Routes for Durian
-  # Index page (Durian)
   get '/durians' => 'durians#index', as: 'durians'
 
 
-
-
   # Routes for Order
-  # Index page (Order)
   get '/orders' => 'orders#index', as: 'orders'
-  get '/orders/:id' => 'orders#show' , as: 'order'
-
   get '/orders/payment' => 'orders#payment', as: 'payment'
+
   post '/orders/payment/webhook' => 'orders#payment_webhook'
 
   get '/orders/notification' => 'orders#notification', as: 'orders_notification'
-  get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
+  get '/orders/:id' => 'orders#show' , as: 'order'
 
-
-
-
-  # # Shopping Cart page
   # Routes for Shopping Cart
-  # Index page (Shopping Cart)
   get '/shoppingcarts' => 'shoppingcarts#index', as: 'shoppingcarts'
 
   # Edit item in cart (U)
@@ -41,5 +31,4 @@ Rails.application.routes.draw do
 
   # Cookies Handlers
   post '/shoppingcarts/cart' => 'shoppingcarts#add_item', as: 'shoppingcarts_add'
-
 end
