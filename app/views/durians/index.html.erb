@@ -33,7 +33,7 @@
       	<% @durians.each do |durian| %>
 	      	<div class="col-lg-4 col-md-6 mb-4">
 	          <div class="card h-100">
-	            <img class="card-img-top" src="https://i.imgur.com/jKMQZyT.jpg" alt="">
+	          	<%= image_tag(durian.image_url) %>
 	            <div class="card-body">
 	              <h4 class="card-title">
 	                <%= durian.name %>
@@ -43,7 +43,13 @@
 	            </div>
 	              <div class="addCartButton">
 	                <div class="float-right">
-	                	<%= link_to 'Select this durian', durian_path(durian.id), class: 'btn btn-success btn-sm' %>
+	                	<%= form_with scope: :durian, url: shoppingcarts_add_path, local: true do |form| %>
+										<%= form.hidden_field :id, :value => durian.id %>
+										<%= form.hidden_field :name, :value => durian.name %>
+								    <%= form.hidden_field :price_per_kg, :value => durian.price_per_kg %>
+								    <%= form.hidden_field :weight, :value => 1 %>
+								    <%= form.submit 'Add to cart', class: "btn btn-success btn-sm"%>
+								<% end %>
 	                </div>
 	              </div>
 	            <div class="card-footer">

@@ -122,32 +122,31 @@
         	<%= "$" + (item["price_per_kg"].to_i/100).to_s %>
         </td>
 
-     		<td>
+	   		<td>
 						<div class="form-row">
 								<div class="col-md-3">
 								<%= form_with scope: :durian, url: shoppingcarts_plus_path, local: true do |form| %>
 
-  							<%= form.hidden_field :id, :value => item["id"] %>
+								<%= form.hidden_field :id, :value => item["id"] %>
 
-  							<%= form.submit '+', class: "btn btn-success"%>
-  							<% end %>
+								<%= form.submit '+', class: "btn btn-success"%>
+								<% end %>
 								</div>
 
-						<div class="col-md-3">
-							<%= item["weight"] + "kg" %>
-						</div>
+							<div class="col-md-3">
+								<%= item["weight"] + "kg" %>
+							</div>
 
-						<div class="col-md-3">
-  					<%= form_with scope: :durian, url: shoppingcarts_minus_path, local: true do |form| %>
+							<div class="col-md-3">
+	  					<%= form_with scope: :durian, url: shoppingcarts_minus_path, local: true do |form| %>
 
-  					<%= form.hidden_field :id, :value => item["id"] %>
+	  					<%= form.hidden_field :id, :value => item["id"] %>
 
-  					<%= form.submit '-', class: "btn btn-danger"%>
-  					<% end %>
-						</div>
-				</div>
-    	</td>
-
+	  					<%= form.submit '-', class: "btn btn-danger"%>
+	  					<% end %>
+							</div>
+					</div>
+	    	</td>
 
         <td>
 					<%= "$" + ((item["price_per_kg"].to_i * item["weight"].to_i)/100).to_s %>
@@ -166,34 +165,24 @@
 		<% end %>
 	</tbody>
 </table>
+
 <hr>
-
-
-<!-- Payment section -->
 <h1>Total Payment Amount: <%= "$" + (@payment_amount/100).to_s %></h1>
-<button type='button' class='btn btn-primary payment'>Payment</button>
-<hr>
 
+
+<hr>
 <!-- Address and contact information section -->
 <h1>Delivery Address & Contact Info</h1>
-<%= form_with scope: :durian, url: root_path, local: true do |form| %>
 
 <p>
-		<%= form.label :delivery_address, 'Address' %><br>
-		<%= form.text_field :delivery_address %>
-  </p>
+  Postal Code:<br>
+  <input type="number" id="postal-code"/>
+</p>
 
-  <p>
-    <%= form.label :phone_number, 'Phone No.' %><br>
-		<%= form.text_field :phone_number %>
-  </p>
+<p>
+	Address:<br>
+	<input type="area" id="delivery-address" size="60"/>
+</p>
 
-  <p>
-    <%= form.label :postal_code, 'Postal Code' %><br>
-    <%= form.number_field :postal_code %>
-  </p>
-
-  <p>
-    <%= form.submit 'Confirm', class: "btn btn-success"%>
-  </p>
-<% end %>
+<button type='button' class='btn btn-primary' id='payment'>Payment</button>
+<hr>

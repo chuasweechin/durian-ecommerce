@@ -15,7 +15,10 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+    @shopping_cart_items = session["cart"]
+
+    @orders = Order.where(txn_id: params[:id], user: current_user.id)
+    p @orders
   end
 
   def new
@@ -61,38 +64,41 @@ class OrdersController < ApplicationController
 
   def payment
     payment_amount = 0
+
     txn_id = SecureRandom.uuid
     @user = User.find(current_user.id)
 
-    # create payment order in the system
+    # create payment order in the system if item has weight more than 0
     session["cart"].each do |item|
-      @durian = Durian.find(item["id"])
+      if (item["weight"].to_i > 0)
+          @durian = Durian.find(item["id"])
 
-      @order = Order.new(weight_in_kg: item["weight"],
-                         payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
-                         txn_date: DateTime.current(),
-                         txn_id: txn_id,
-                         delivery_address: "somewhere",
-                         order_status: "processing",
-                         user: @user,
-                         durian: @durian)
+          @order = Order.new(weight_in_kg: item["weight"],
+                             payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
+                             txn_date: DateTime.current(),
+                             txn_id: txn_id,
+                             delivery_address: request.query_parameters[:address],
+                             order_status: "created",
+                             user: @user,
+                             durian: @durian)
 
-      @order.save
-      payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+          @order.save
+          payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+      end
     end
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: [{
         name: 'Payment for Durian',
-        description: "Order ID: #{txn_id}",
+        description: "Order ID: #{ txn_id }",
         images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
         amount: payment_amount,
         currency: 'sgd',
         quantity: 1
       }],
-      success_url: 'http://localhost:3000',
-      cancel_url: 'http://localhost:3000',
+      success_url: "http://localhost:3000/orders/#{ txn_id }",
+      cancel_url: "http://localhost:3000"
     )
 
     render plain: session.id
@@ -101,15 +107,15 @@ class OrdersController < ApplicationController
   def payment_webhook
     event_json = JSON.parse(request.body.read)
 
-    # Do something with event_json
-    p event_json["data"]["object"]["payment_intent"]
+    txn_id = event_json["data"]["object"]["display_items"][0]["custom"]["description"].split(": ")[1]
+    charge_id = event_json["data"]["object"]["payment_intent"]
 
-    # Return a response to acknowledge receipt of the event
-    render plain: "test webhook"
-  end
+    @orders = Order.where(txn_id: txn_id)
 
-private
-  def post_params
-    params.require(:order).permit(:name)
+    @orders.each do |order|
+       order.update(order_status: 'paid', charge_id: event_json["data"]["object"]["payment_intent"])
+    end
+
+    render plain: "webhook"
   end
 end

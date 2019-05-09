@@ -31,21 +31,16 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/users/sign_in">Login</a>
+          	<% if user_signed_in? == true %>
+          		<%= link_to 'Log Out', destroy_user_session_url, method: :delete, class: 'nav-link' %>
+ 						<% else %>
+ 							<%= link_to 'Log In', new_user_session_url, class: 'nav-link'%>
+            <% end %>
           </li>
           <li class="nav-item active">
-          	<% if @shopping_cart_items == nil %>
-              <a class="btn btn-success btn-sm ml-3" href="/shoppingcarts">
-              <span class="badge badge-light">
-              0
-              </span>
-              <i class="fa fa-shopping-cart"></i>
-              </a>
-            <% else %>
-              <a class="btn btn-success btn-sm ml-3" href="/shoppingcarts">
-          	<%= @shopping_cart_items.length %>
-          	  <i class="fa fa-shopping-cart"></i></a>
-            <% end %>
+            <a class="btn btn-danger" href="/shoppingcarts">
+            	<%= @shopping_cart_items.length %>
+            	<img style="height:24px; width:24px" src="https://img.icons8.com/material-outlined/24/000000/shopping-cart.png">Checkout</a>
           </li>
         </ul>
       </div>
