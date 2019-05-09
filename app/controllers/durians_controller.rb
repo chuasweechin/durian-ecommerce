@@ -2,6 +2,8 @@ class DuriansController < ApplicationController
 
   def index
     @durians = Durian.all
+
+    @shopping_cart_items = session["cart"]
   end
 
   def show

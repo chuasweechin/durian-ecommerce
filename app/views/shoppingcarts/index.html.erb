@@ -72,8 +72,34 @@
 		<% end %>
 	</tbody>
 </table>
+<hr>
 
 
 <!-- Payment section -->
 <h1>Total Payment Amount: <%= "$" + (@payment_amount/100).to_s %></h1>
 <button type='button' class='btn btn-primary payment'>Payment</button>
+<hr>
+
+<!-- Address and contact information section -->
+<h1>Delivery Address & Contact Info</h1>
+<%= form_with scope: :durian, url: root_path, local: true do |form| %>
+
+<p>
+		<%= form.label :delivery_address, 'Address' %><br>
+		<%= form.text_field :delivery_address %>
+  </p>
+
+  <p>
+    <%= form.label :phone_number, 'Phone No.' %><br>
+		<%= form.text_field :phone_number %>
+  </p>
+
+  <p>
+    <%= form.label :postal_code, 'Postal Code' %><br>
+    <%= form.number_field :postal_code %>
+  </p>
+
+  <p>
+    <%= form.submit 'Confirm', class: "btn btn-success"%>
+  </p>
+<% end %>
