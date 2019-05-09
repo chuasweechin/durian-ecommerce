@@ -1,0 +1,65 @@
+<section class="jumbotron text-center">
+<div class="container">
+<h1 class="jumbotron-heading">Order Confirmation & Payment</h1>
+</div>
+</section>
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Price per kg</th>
+                        <th scope="col" class="text-center">Weight</th>
+                        <th scope="col" class="text-right">Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                		<% session["cart"].each do |item| %>
+                  		<tr>
+                          <td>
+                          	<%= image_tag(item["image_url"]) %>
+                          </td>
+
+                          <td>
+                          	<%= item["name"] %>
+                          </td>
+
+                          <td>
+                          	<%= "$" + (item["price_per_kg"].to_i/100).to_s %>/kg
+                          </td>
+
+                          <td>
+                          	<div class="form-row">
+															<div class="col-md-3">
+																<%= item["weight"] + "kg" %>
+															</div>
+														</div>
+                          </td>
+
+                          <td class="text-right">
+                          	<%= "$" + ((item["price_per_kg"].to_i * item["weight"].to_i)/100).to_s %>
+                          </td>
+
+                      </tr>
+                		<% end %>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td class="text-right"><strong><%= "$" + (@payment_amount/100).to_s %></strong></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a href="/shoppingcarts/checkout" class='btn btn-info'>Back</a>
+<button type='button' class='btn btn-primary' id='payment'>Payment</button>

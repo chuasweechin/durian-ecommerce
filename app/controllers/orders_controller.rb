@@ -45,9 +45,7 @@ class OrdersController < ApplicationController
 
   def payment
     payment_amount = 0
-
     txn_id = SecureRandom.uuid
-    @user = User.find(current_user.id)
 
     # create payment order in the system if item has weight more than 0
     session["cart"].each do |item|
@@ -60,7 +58,6 @@ class OrdersController < ApplicationController
                              txn_id: txn_id,
                              delivery_address: request.query_parameters[:address],
                              order_status: "created",
-                             user: @user,
                              durian: @durian)
 
           @order.save

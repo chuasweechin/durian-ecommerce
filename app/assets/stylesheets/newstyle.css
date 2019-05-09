@@ -263,6 +263,6 @@ footer {
   align-items: center;
 }
 
-#delivery-address {
+#delivery_address {
 	text-transform: capitalize;
 }

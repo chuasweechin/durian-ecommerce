@@ -13,26 +13,25 @@ window.onload = function() {
     };
 
     var addressSearchRequestHandler = function() {
-        if (JSON.parse(this.responseText).results.length > 1) {
-            document.querySelector('#delivery-address').value = JSON.parse(this.responseText).results[0].ADDRESS.toLowerCase();
+        if (JSON.parse(this.responseText).results.length > 0) {
+            document.querySelector('#delivery_address').value = JSON.parse(this.responseText).results[0].ADDRESS.toLowerCase();
         } else {
-            document.querySelector('#delivery-address').value = "Please enter a valid postal code"
+            document.querySelector('#delivery_address').value = "Please enter a valid postal code"
         }
     };
 
     var paymentEventHandler = function() {
         var request = new XMLHttpRequest();
-        var deliveryAddress = document.querySelector('#delivery-address').value
 
         request.addEventListener("load", paymentCheckoutRequestHandler);
-        request.open("GET", `/orders/payment?address=${ deliveryAddress }`);
+        request.open("GET", `/orders/payment`);
 
         request.send();
     };
 
     var postalCodeEventHandler = function() {
         var request = new XMLHttpRequest();
-        var postalCode = document.querySelector('#delivery-postal-code').value
+        var postalCode = document.querySelector('#delivery_postal_code').value
 
         if (postalCode.length === 6) {
             request.addEventListener("load", addressSearchRequestHandler);
@@ -47,7 +46,7 @@ window.onload = function() {
         document.querySelector('#payment').addEventListener('click', paymentEventHandler)
     }
 
-    if (document.querySelector('#delivery-postal-code') !== null) {
-        document.querySelector('#delivery-postal-code').addEventListener('keyup', postalCodeEventHandler)
+    if (document.querySelector('#delivery_postal_code') !== null) {
+        document.querySelector('#delivery_postal_code').addEventListener('keyup', postalCodeEventHandler)
     }
 };
