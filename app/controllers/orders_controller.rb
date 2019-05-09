@@ -19,11 +19,15 @@ class OrdersController < ApplicationController
       body: "Hello World!"
     )
 
-    render plain: "SMS Sent!"
   end
 
   def payment
-    if shopping_cart_valid? == true
+    url = URI.parse("https://checkout.stripe.com/pay")
+    req = Net::HTTP.new(url.host, url.port)
+    req.use_ssl = true if url.scheme == 'https'
+    res = req.request_head(url.path)
+
+    if shopping_cart_valid? == true && res.code == "200"
       payment_name = ""
       payment_amount = 0
       txn_id = SecureRandom.uuid
