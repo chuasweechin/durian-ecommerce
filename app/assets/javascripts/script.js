@@ -13,7 +13,11 @@ window.onload = function() {
     };
 
     var addressSearchRequestHandler = function() {
-        document.querySelector('#delivery-address').value = JSON.parse(this.responseText).results[0].ADDRESS.toLowerCase();
+        if (JSON.parse(this.responseText).results.length > 1) {
+            document.querySelector('#delivery-address').value = JSON.parse(this.responseText).results[0].ADDRESS.toLowerCase();
+        } else {
+            document.querySelector('#delivery-address').value = "Please enter a valid postal code"
+        }
     };
 
     var paymentEventHandler = function() {
@@ -28,7 +32,7 @@ window.onload = function() {
 
     var postalCodeEventHandler = function() {
         var request = new XMLHttpRequest();
-        var postalCode = document.querySelector('#postal-code').value
+        var postalCode = document.querySelector('#delivery-postal-code').value
 
         if (postalCode.length === 6) {
             request.addEventListener("load", addressSearchRequestHandler);
@@ -43,7 +47,7 @@ window.onload = function() {
         document.querySelector('#payment').addEventListener('click', paymentEventHandler)
     }
 
-    if (document.querySelector('#postal-code') !== null) {
-        document.querySelector('#postal-code').addEventListener('keyup', postalCodeEventHandler)
+    if (document.querySelector('#delivery-postal-code') !== null) {
+        document.querySelector('#delivery-postal-code').addEventListener('keyup', postalCodeEventHandler)
     }
 };

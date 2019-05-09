@@ -1,0 +1,83 @@
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Delivery Information</h1>
+     </div>
+</section>
+
+<h2>Contact Details</h2>
+<div class="container">
+	<div class="row">
+		<div class="col-3">
+  		Name:<br>
+  		<input type="text" class="form-control" id="contact-name" size="30"/>
+		</div>
+		<div class="col-3">
+  		Email:<br>
+  		<input type="text" class="form-control" id="contact-email" size="30"/>
+		</div>
+		<div class="col-3">
+  		Contact Number:<br>
+  		<input type="number" class="form-control" id="contact-number" size="10"/>
+		</div>
+	</div>
+<br>
+	<div class="row">
+		<div class="col-9">
+  		Add Comments About Your Order:<br>
+  		<textarea rows="3" class="form-control" id="contact-comment"></textarea>
+		</div>
+	</div>
+
+</div>
+
+
+<hr/>
+<h2>Delivery Details</h2>
+
+<div class="container">
+	<div class="row">
+		<div class="col-4">
+  		Postal Code:<br>
+  		<input type="number" class="form-control" id="delivery-postal-code"/>
+		</div>
+
+		<div class="col-4">
+			Unit Number:<br>
+			<input type="text" class="form-control" id="delivery-unit-number"/>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="row">
+		<div class="col-8">
+			Address:<br>
+			<input type="text" class="form-control" id="delivery-address" disabled/>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="row">
+		<div class="col-4">
+			Delivery Date:<br>
+			<input type="date" class="form-control" id="delivery-date"/>
+		</div>
+
+		<div class="col-4">
+			Delivery Time:<br>
+	    <select class="form-control" id="delivery-time">
+	      <option>10.00am - 12.00pm</option>
+	      <option>11.00am - 1.00pm</option>
+	      <option>3.00pm - 5.00pm</option>
+	      <option>5.00pm - 7.00pm</option>
+	    </select>
+		</div>
+	</div>
+
+</div>
+
+
+
+<button type='button' class='btn btn-primary' id='payment'>Payment</button>
+<hr>

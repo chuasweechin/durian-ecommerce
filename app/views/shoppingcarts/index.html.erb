@@ -1,117 +1,101 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">Shopping Cart</h1>
      </div>
 </section>
 
-<div class="container mb-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price per kg</th>
-                            <th scope="col" class="text-center">Weight</th>
-                            <th scope="col" class="text-right">Total Price</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    		<% @shopping_cart_items.each do |item| %>
-	                    		<tr>
-	                            <td>
-	                            	<%= image_tag(item["image_url"]) %>
-	                            </td>
-
-	                            <td>
-	                            	<%= item["name"] %>
-	                            </td>
-
-	                            <td>
-	                            	<%= "$" + (item["price_per_kg"].to_i/100).to_s %>/kg
-	                            </td>
-
-	                            <td>
-	                            	<div class="form-row">
-																	<div class="col-md-3">
-																	<%= form_with scope: :durian, url: shoppingcarts_plus_path, local: true do |form| %>
-																		<%= form.hidden_field :id, :value => item["id"] %>
-																		<%= form.submit '+', class: "btn btn-success"%>
-																	<% end %>
-																	</div>
-
-																	<div class="col-md-3">
-																		<%= item["weight"] + "kg" %>
-																	</div>
-
-																	<div class="col-md-3">
-											  					<%= form_with scope: :durian, url: shoppingcarts_minus_path, local: true do |form| %>
-												  					<%= form.hidden_field :id, :value => item["id"] %>
-												  					<%= form.submit '-', class: "btn btn-danger"%>
-											  					<% end %>
-																	</div>
-																</div>
-	                            </td>
-
-	                            <td class="text-right">
-	                            	<%= "$" + ((item["price_per_kg"].to_i * item["weight"].to_i)/100).to_s %>
-	                            </td>
-
-	                            <td class="text-right">
-	                            	<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
-																	<%= form.hidden_field :id, :value => item["id"] %>
-																	<%= form.submit 'Delete', class: "btn btn-warning"%>
-																<% end %>
-															</td>
+<% if @shopping_cart_items.length === 0 %>
+	<h2>You have a empty shopping cart</h1>
+<% else %>
+	<div class="container mb-4">
+	    <div class="row">
+	        <div class="col-12">
+	            <div class="table-responsive">
+	                <table class="table table-striped">
+	                    <thead>
+	                        <tr>
+	                            <th scope="col"></th>
+	                            <th scope="col">Item</th>
+	                            <th scope="col">Price per kg</th>
+	                            <th scope="col" class="text-center">Weight</th>
+	                            <th scope="col" class="text-right">Total Price</th>
+	                            <th> </th>
 	                        </tr>
-                    		<% end %>
+	                    </thead>
+	                    <tbody>
+	                    		<% @shopping_cart_items.each do |item| %>
+		                    		<tr>
+		                            <td>
+		                            	<%= image_tag(item["image_url"]) %>
+		                            </td>
 
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong><%= "$" + (@payment_amount/100).to_s %></strong></td>
-                        </tr>
+		                            <td>
+		                            	<%= item["name"] %>
+		                            </td>
 
-                    </tbody>
-                </table>
-            </div>
-        </div>
+		                            <td>
+		                            	<%= "$" + (item["price_per_kg"].to_i/100).to_s %>/kg
+		                            </td>
 
-        <div class="col mb-2">
-            <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <a href="/" class="btn btn-lg btn-block btn-primary">Continue Shopping</a>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+		                            <td>
+		                            	<div class="form-row">
+																		<div class="col-md-3">
+																		<%= form_with scope: :durian, url: shoppingcarts_plus_path, local: true do |form| %>
+																			<%= form.hidden_field :id, :value => item["id"] %>
+																			<%= form.submit '+', class: "btn btn-success"%>
+																		<% end %>
+																		</div>
 
+																		<div class="col-md-3">
+																			<%= item["weight"] + "kg" %>
+																		</div>
 
-<hr>
-<!-- Address and contact information section -->
-<h1>Delivery Address & Contact Info</h1>
+																		<div class="col-md-3">
+												  					<%= form_with scope: :durian, url: shoppingcarts_minus_path, local: true do |form| %>
+													  					<%= form.hidden_field :id, :value => item["id"] %>
+													  					<%= form.submit '-', class: "btn btn-danger"%>
+												  					<% end %>
+																		</div>
+																	</div>
+		                            </td>
 
-<p>
-  Postal Code:<br>
-  <input type="number" id="postal-code"/>
-</p>
+		                            <td class="text-right">
+		                            	<%= "$" + ((item["price_per_kg"].to_i * item["weight"].to_i)/100).to_s %>
+		                            </td>
 
-<p>
-	Address:<br>
-	<input type="area" id="delivery-address" size="60"/>
-</p>
+		                            <td class="text-right">
+		                            	<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
+																		<%= form.hidden_field :id, :value => item["id"] %>
+																		<%= form.submit 'Remove', class: "btn btn-warning"%>
+																	<% end %>
+																</td>
+		                        </tr>
+	                    		<% end %>
 
-<button type='button' class='btn btn-primary' id='payment'>Payment</button>
-<hr>
+	                        <tr>
+	                            <td></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td><strong>Total</strong></td>
+	                            <td class="text-right"><strong><%= "$" + (@payment_amount/100).to_s %></strong></td>
+	                        </tr>
+
+	                    </tbody>
+	                </table>
+	            </div>
+	        </div>
+
+	        <div class="col mb-2">
+	            <div class="row">
+	                <div class="col-sm-12  col-md-6">
+	                    <a href="/" class="btn btn-lg btn-block btn-primary">Continue Shopping</a>
+	                </div>
+	                <div class="col-sm-12 col-md-6 text-right">
+	                    <a href="/shoppingcarts/checkout" class="btn btn-lg btn-block btn-success text-uppercase">Checkout</a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<% end %>

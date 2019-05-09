@@ -10,13 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_09_023312) do
+ActiveRecord::Schema.define(version: 2019_05_09_154414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "creams", force: :cascade do |t|
     t.text "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.text "name"
+    t.text "email"
+    t.text "contact_number"
+    t.text "delivery_omment"
+    t.text "delivery_address"
+    t.text "postal_code"
+    t.text "unit_number"
+    t.text "address"
+    t.date "delivery_date"
+    t.time "delivery_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -39,35 +54,20 @@ ActiveRecord::Schema.define(version: 2019_05_09_023312) do
     t.integer "payment_amount"
     t.datetime "txn_date"
     t.text "txn_id"
-    t.text "delivery_address"
     t.text "order_status"
-    t.bigint "user_id"
     t.bigint "durian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "charge_id"
+    t.bigint "delivery_id"
+    t.index ["delivery_id"], name: "index_orders_on_delivery_id"
     t.index ["durian_id"], name: "index_orders_on_durian_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "sweets", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "address"
-    t.text "phone_number"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end
