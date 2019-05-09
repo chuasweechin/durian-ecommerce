@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_08_075923) do
+ActiveRecord::Schema.define(version: 2019_05_09_023312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2019_05_08_075923) do
     t.text "description"
     t.bigint "cream_id"
     t.bigint "sweet_id"
+    t.text "image_url"
     t.index ["cream_id"], name: "index_durians_on_cream_id"
     t.index ["sweet_id"], name: "index_durians_on_sweet_id"
   end
