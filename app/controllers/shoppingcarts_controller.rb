@@ -1,5 +1,4 @@
 class ShoppingcartsController < ApplicationController
-
   def index
     @payment_amount = 0
 
@@ -9,7 +8,7 @@ class ShoppingcartsController < ApplicationController
   end
 
   def checkout
-    if session["cart"].length === 0
+    if shopping_cart_valid? == false
       redirect_to root_path
     end
   end
@@ -20,7 +19,7 @@ class ShoppingcartsController < ApplicationController
   end
 
   def confirmation
-    if session["cart"].length === 0
+    if shopping_cart_valid? == false
       redirect_to root_path
     end
 
@@ -64,10 +63,6 @@ class ShoppingcartsController < ApplicationController
   end
 
   def add_item
-    if !session["cart"].kind_of?(Array)
-      session["cart"] = []
-    end
-
     found = false;
 
     if session["cart"].length == 0

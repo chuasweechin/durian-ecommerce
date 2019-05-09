@@ -44,42 +44,43 @@ class OrdersController < ApplicationController
   end
 
   def payment
-    payment_amount = 0
-    txn_id = SecureRandom.uuid
+    if shopping_cart_valid? == true
+      payment_amount = 0
+      txn_id = SecureRandom.uuid
 
-    # create payment order in the system if item has weight more than 0
-    session["cart"].each do |item|
-      if (item["weight"].to_i > 0)
-          @durian = Durian.find(item["id"])
+      session["cart"].each do |item|
+        # @durian = Durian.find(item["id"])
 
-          @order = Order.new(weight_in_kg: item["weight"],
-                             payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
-                             txn_date: DateTime.current(),
-                             txn_id: txn_id,
-                             delivery_address: request.query_parameters[:address],
-                             order_status: "created",
-                             durian: @durian)
+        # @order = Order.new(weight_in_kg: item["weight"],
+        #                    payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
+        #                    txn_date: DateTime.current(),
+        #                    txn_id: txn_id,
+        #                    delivery_address: request.query_parameters[:address],
+        #                    order_status: "created",
+        #                    durian: @durian)
 
-          @order.save
-          payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+        # @order.save
+        payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
       end
+
+      session = Stripe::Checkout::Session.create(
+        payment_method_types: ['card'],
+        line_items: [{
+          name: 'Payment for Durian',
+          description: "Order ID: #{ txn_id }",
+          images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
+          amount: payment_amount,
+          currency: 'sgd',
+          quantity: 1
+        }],
+        success_url: "http://localhost:3000",
+        cancel_url: "http://localhost:3000"
+      )
+
+      render plain: session.id
+    else
+      render plain: "something is wrong with the shopping cart"
     end
-
-    session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
-      line_items: [{
-        name: 'Payment for Durian',
-        description: "Order ID: #{ txn_id }",
-        images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
-        amount: payment_amount,
-        currency: 'sgd',
-        quantity: 1
-      }],
-      success_url: "http://localhost:3000/orders/#{ txn_id }",
-      cancel_url: "http://localhost:3000"
-    )
-
-    render plain: session.id
   end
 
   def payment_webhook
