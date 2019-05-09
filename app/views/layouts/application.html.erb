@@ -32,15 +32,11 @@
             <a class="nav-link" href="/users/sign_in">Login</a>
           </li>
           <li class="nav-item active">
-          	<% if @shopping_cart_items == nil %>
-            <a class="btn btn-danger" href="/shoppingcarts">
-            	0
-            	<img style="height:24px; width:24px" src="https://img.icons8.com/material-outlined/24/000000/shopping-cart.png">Checkout</a>
-            <% else %>
+
             <a class="btn btn-danger" href="/shoppingcarts">
             	<%= @shopping_cart_items.length %>
             	<img style="height:24px; width:24px" src="https://img.icons8.com/material-outlined/24/000000/shopping-cart.png">Checkout</a>
-            <% end %>
+
           </li>
         </ul>
       </div>

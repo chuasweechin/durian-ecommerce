@@ -16,10 +16,12 @@ window.onload = function() {
         var request = new XMLHttpRequest();
 
         request.addEventListener("load", paymentCheckoutRequestHandler);
-        request.open("GET", "/orders/payment");
+        request.open("GET", `/orders/payment?address=${document.querySelector('#delivery-address').value}`);
 
         request.send();
     };
 
-    document.querySelector('.payment').addEventListener('click', paymentEventHandler)
+    if (document.querySelector('.payment') !== null) {
+        document.querySelector('.payment').addEventListener('click', paymentEventHandler)
+    }
 };
