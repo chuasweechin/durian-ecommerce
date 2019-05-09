@@ -1,15 +1,9 @@
 class ShoppingcartsController < ApplicationController
 
 def index
-    puts session["cart"].inspect
-    puts session["cart"].length
-
-    @shopping_cart_items = session["cart"]
-    puts @shopping_cart_items
-
-    @shopping_cart_items = session["cart"]
-
     @payment_amount = 0
+
+    @shopping_cart_items = session["cart"]
 
     session["cart"].each do |item|
       @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i

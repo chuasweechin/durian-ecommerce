@@ -24,24 +24,15 @@ Rails.application.routes.draw do
   # Routes for Order
   # Index page (Order)
   get '/orders' => 'orders#index', as: 'orders'
+  get '/orders/:id' => 'orders#show' , as: 'order'
 
-
-  get '/orders/notification' => 'orders#notification', as: 'orders_notification'
-  get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
   get '/orders/payment' => 'orders#payment', as: 'payment'
   post '/orders/payment/webhook' => 'orders#payment_webhook'
 
-  # Create (C) - Checkout page
-  get '/orders/new' => 'orders#new', as: 'new_order'
-  post '/orders' => 'orders#create'
-
-  # Update (U)
-  get '/orders/:id/edit' => 'orders#edit', as: 'edit_order'
-  patch '/orders/:id' => 'orders#update'
+  get '/orders/notification' => 'orders#notification', as: 'orders_notification'
+  get '/orders/postal' => 'orders#postal_code', as: 'orders_postal_code'
 
 
-  # Read (R)
-  get '/orders/:id' => 'orders#show' , as: 'order'
 
 
   # # Shopping Cart page
