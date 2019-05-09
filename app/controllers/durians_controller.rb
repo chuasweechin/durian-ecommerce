@@ -5,9 +5,6 @@ class DuriansController < ApplicationController
 
     if (session["cart"] == nil)
       session["cart"] = []
-      @shopping_cart_items = session["cart"]
-    else
-      @shopping_cart_items = session["cart"]
     end
   end
 

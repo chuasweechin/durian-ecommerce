@@ -11,14 +11,9 @@ class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
 
   def index
-    @orders = Order.all
   end
 
   def show
-    @shopping_cart_items = session["cart"]
-
-    @orders = Order.where(txn_id: params[:id], user: current_user.id)
-    p @orders
   end
 
   def new
@@ -46,20 +41,6 @@ class OrdersController < ApplicationController
     )
 
     render plain: "SMS Sent!"
-  end
-
-  def postal_code
-    url = 'https://developers.onemap.sg/commonapi/search?searchVal=510578&returnGeom=N&getAddrDetails=Y'
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-
-    response_in_JSON = JSON.parse(response)
-
-    if (response_in_JSON["results"].length == 0 )
-      render plain: "not found!"
-    else
-      render plain: response_in_JSON["results"][0]["ADDRESS"]
-    end
   end
 
   def payment

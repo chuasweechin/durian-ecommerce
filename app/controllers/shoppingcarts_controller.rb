@@ -3,19 +3,18 @@ class ShoppingcartsController < ApplicationController
   def index
     @payment_amount = 0
 
-    @shopping_cart_items = session["cart"]
-
     session["cart"].each do |item|
       @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
     end
   end
 
   def checkout
-    @shopping_cart_items = session["cart"]
   end
 
   def confirmation
-    @shopping_cart_items = session["cart"]
+    if session["cart"].length === 0
+      redirect_to root_path
+    end
   end
 
   def plus_weight
@@ -23,6 +22,7 @@ class ShoppingcartsController < ApplicationController
       if durian["id"] == post_params["id"]
         durian["weight"] = durian["weight"].to_i + 1
         durian["weight"] = durian['weight'].to_s
+
         redirect_to shoppingcarts_path
       end
     end
@@ -33,6 +33,7 @@ class ShoppingcartsController < ApplicationController
       if durian["id"] == post_params["id"]
         durian["weight"] = durian["weight"].to_i - 1
         durian["weight"] = durian['weight'].to_s
+
         redirect_to shoppingcarts_path
       end
     end
@@ -49,7 +50,7 @@ class ShoppingcartsController < ApplicationController
 
   def add_item
     if !session["cart"].kind_of?(Array)
-    session["cart"] = []
+      session["cart"] = []
     end
 
     found = false;

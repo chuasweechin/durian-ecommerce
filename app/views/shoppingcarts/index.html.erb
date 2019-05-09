@@ -4,7 +4,7 @@
      </div>
 </section>
 
-<% if @shopping_cart_items.length === 0 %>
+<% if session["cart"].length === 0 %>
 	<h2>You have a empty shopping cart</h1>
 <% else %>
 	<div class="container mb-4">
@@ -23,7 +23,7 @@
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                    		<% @shopping_cart_items.each do |item| %>
+	                    		<% session["cart"].each do |item| %>
 		                    		<tr>
 		                            <td>
 		                            	<%= image_tag(item["image_url"]) %>
