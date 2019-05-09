@@ -7,17 +7,6 @@ Rails.application.routes.draw do
   # Index page (Durian)
   get '/durians' => 'durians#index', as: 'durians'
 
-  # # Create (C)
-  get '/durians/new' => 'durians#new', as: 'new_durian'
-  post '/durians' => 'durians#create'
-
-  # Read (R)
-  get '/durians/:id' => 'durians#show' , as: 'durian'
-
-  # Update (U)
-  get '/durians/:id/edit' => 'durians#edit', as: 'edit_durian'
-  patch '/durians/:id' => 'durians#update'
-
 
 
 
@@ -60,6 +49,6 @@ Rails.application.routes.draw do
   post '/shoppingcarts/delete' => 'shoppingcarts#delete_item', as: 'shoppingcarts_delete'
 
   # Cookies Handlers
-  post '/shoppingcarts/:id/cart' => 'shoppingcarts#add_item', as: 'shoppingcarts_add'
+  post '/shoppingcarts/cart' => 'shoppingcarts#add_item', as: 'shoppingcarts_add'
 
 end

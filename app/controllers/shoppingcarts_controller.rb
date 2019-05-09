@@ -74,7 +74,7 @@ def index
     session["cart"] << post_params
   end
 
-  redirect_to durian_path
+  redirect_to root_path
   end
 
 private
