@@ -1,5 +1,7 @@
 require 'json'
 require 'stripe'
+require 'HTTParty'
+require 'nokogiri'
 require 'net/http'
 require 'twilio-ruby'
 
@@ -124,9 +126,9 @@ class OrdersController < ApplicationController
        order.update(order_status: 'paid', charge_id: event_json["data"]["object"]["payment_intent"])
     end
 
-    # call send invoice method pass, in the @orders for processing
     send_sms_invoice(@orders)
 
-    render plain: "webhook"
+    render plain: "success"
   end
+
 end

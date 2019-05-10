@@ -1,0 +1,30 @@
+<h2>Price Compare with Other Online Durian Store</h2>
+
+<h5><%= link_to @url, @url %></h5>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Item</th>
+            <th scope="col">Price per kg</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+    		<% @products.each_with_index do |product, index| %>
+      		<tr>
+              <td>
+              	<%= index + 1 %>
+              </td>
+
+              <td>
+              	<%= product["name"] %>
+              </td>
+
+              <td>
+              	<%= "$" + product["price"] %>
+              </td>
+    		<% end %>
+    </tbody>
+</table>
