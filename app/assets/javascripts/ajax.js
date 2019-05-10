@@ -5,15 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // add event listener which takes in a submit event
         form.addEventListener('submit', e => {
             // prevent the default event, which would reload the page (since form takes an action)
+            console.log(e)
             e.preventDefault();
             // construct a json object to be submitted with the fetch request
             const requestData = {
                 id: e.target[2].value,
                 name: e.target[3].value,
-                price_per_kg: e.target[4].value,
-                weight: e.target[5].value
+                image_url: e.target[4].value,
+                price_per_kg: e.target[5].value,
+                weight: e.target[6].value
             }
-            // console.log(requestData)
+            console.log(requestData)
             // do a post request to a route with an options object
             fetch('/shoppingcarts/cart', {
                 method: 'POST', // or 'PUT'
