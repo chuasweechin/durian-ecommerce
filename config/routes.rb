@@ -3,10 +3,13 @@ Rails.application.routes.draw do
 
   # Routes for Durian
   get '/durians' => 'durians#index', as: 'durians'
+  get '/durians/compare' => 'durians#compare_price'
+
 
   # Routes for Order
   get '/orders/payment' => 'orders#payment', as: 'payment'
   get '/orders/payment/success/:id' => 'orders#payment_success'
+
   post '/orders/payment/webhook' => 'orders#payment_webhook'
 
   # Routes for Shopping Cart
