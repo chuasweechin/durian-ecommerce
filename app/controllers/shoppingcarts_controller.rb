@@ -1,5 +1,5 @@
 class ShoppingcartsController < ApplicationController
-
+# a way to turn off CSRF that won't render a null session
 skip_before_action :verify_authenticity_token
 
   def index
@@ -36,25 +36,53 @@ skip_before_action :verify_authenticity_token
   end
 
   def plus_weight
-    session["cart"].each do |durian|
-      if durian["id"] == post_params["id"]
-        durian["weight"] = durian["weight"].to_i + 1
-        durian["weight"] = durian['weight'].to_s
+    order_to_addWeight = JSON.parse(request.body.read)
 
-        redirect_to shoppingcarts_path
+    @updatedWeight = 0
+    @updatedTotalPrice = 0
+
+    session["cart"].each do |durian|
+      if durian["id"] == order_to_addWeight["id"]
+        durian["weight"] = durian["weight"].to_i + 1
+        @updatedTotalPrice = durian["weight"].to_i * durian["price_per_kg"].to_i
+
+        durian["weight"] = durian['weight'].to_s
+        @updatedWeight = durian["weight"]
       end
     end
+
+    @payment_amount = 0
+
+    session["cart"].each do |item|
+      @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+    end
+
+    render :json => { weight: @updatedWeight, total_price: @updatedTotalPrice, total_amount: @payment_amount }
   end
 
   def minus_weight
-    session["cart"].each do |durian|
-      if durian["id"] == post_params["id"]
-        durian["weight"] = durian["weight"].to_i - 1
-        durian["weight"] = durian['weight'].to_s
+    order_to_subtractWeight = JSON.parse(request.body.read)
 
-        redirect_to shoppingcarts_path
+    @updatedWeight = 0
+    @updatedTotalPrice = 0
+
+    session["cart"].each do |durian|
+      if durian["id"] == order_to_subtractWeight["id"]
+        durian["weight"] = durian["weight"].to_i - 1
+        @updatedTotalPrice = durian["weight"].to_i * durian["price_per_kg"].to_i
+
+        durian["weight"] = durian['weight'].to_s
+        @updatedWeight = durian["weight"]
       end
     end
+
+    @payment_amount = 0
+
+    session["cart"].each do |item|
+      @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+    end
+
+    render :json => { weight: @updatedWeight, total_price: @updatedTotalPrice, total_amount: @payment_amount }
   end
 
   def delete_item
@@ -63,7 +91,6 @@ skip_before_action :verify_authenticity_token
     session["cart"].each do |durian|
       if durian["id"] == order_to_delete["id"]
         session["cart"].delete_if { |hash| hash["id"] == order_to_delete["id"] }
-        # render :json => session["cart"]
       end
     end
 
