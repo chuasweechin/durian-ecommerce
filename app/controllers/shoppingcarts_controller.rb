@@ -58,13 +58,24 @@ skip_before_action :verify_authenticity_token
   end
 
   def delete_item
+    order_to_delete = JSON.parse(request.body.read)
+
     session["cart"].each do |durian|
-      if durian["id"] == post_params["id"]
-        session["cart"].delete_if { |hash| hash["id"] == post_params["id"] }
-        redirect_to shoppingcarts_path
+      if durian["id"] == order_to_delete["id"]
+        session["cart"].delete_if { |hash| hash["id"] == order_to_delete["id"] }
+        # render :json => session["cart"]
       end
     end
+
+    @payment_amount = 0
+
+    session["cart"].each do |item|
+      @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+    end
+
+      render :json => { cart: session["cart"], amount: @payment_amount }
   end
+
 
   def add_item
     found = false;
@@ -72,11 +83,13 @@ skip_before_action :verify_authenticity_token
     # converting request.body which is in string (ajax.js) to JSON object
     current_order = JSON.parse(request.body.read)
 
+    # if the cart is empty, add the durian in the cart
     if session["cart"].length == 0
       session["cart"] << current_order
       found = true
       render :json => session["cart"]
     else
+      # else if the cart is not empty, and if the same durian was added, increment the weight of that matched durian but do not add a new durian entry into cart
       session["cart"].each do |durian|
         if durian["id"] == current_order["id"]
           durian['weight'] = durian['weight'].to_i + current_order["weight"].to_i
@@ -85,11 +98,11 @@ skip_before_action :verify_authenticity_token
         end
       end
 
+      # if a new durian was added
       if found == false
         session["cart"] << current_order
       end
 
-      # redirect_to root_path
       render :json => session["cart"]
     end
 
