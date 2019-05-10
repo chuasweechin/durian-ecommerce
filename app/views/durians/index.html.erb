@@ -46,6 +46,7 @@
 	                	<%= form_with scope: :durian, url: shoppingcarts_add_path, class: "durian-form", local: true do |form| %>
 										<%= form.hidden_field :id, :value => durian.id %>
 										<%= form.hidden_field :name, :value => durian.name %>
+										<%= form.hidden_field :image_url, :value => durian.image_url %>
 								    <%= form.hidden_field :price_per_kg, :value => durian.price_per_kg %>
 								    <%= form.hidden_field :weight, :value => 1 %>
 								    <%= form.submit 'Add to cart', class: "btn btn-success btn-sm", data: { disable_with: false } %>

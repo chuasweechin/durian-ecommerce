@@ -1,14 +1,7 @@
 class ShoppingcartsController < ApplicationController
+
 skip_before_action :verify_authenticity_token
 def index
-    puts session["cart"].inspect
-    puts session["cart"].length
-
-    @shopping_cart_items = session["cart"]
-    puts @shopping_cart_items
-
-    @shopping_cart_items = session["cart"]
-
     @payment_amount = 0
 
     session["cart"].each do |item|
@@ -16,11 +9,37 @@ def index
     end
   end
 
+  def checkout
+    if shopping_cart_valid? == false
+      redirect_to root_path
+    end
+  end
+
+
+  def set_delivery_details
+     session["delivery_details"] = delivery_params
+     redirect_to confirmation_path
+  end
+
+  def confirmation
+    if shopping_cart_valid? == false
+      redirect_to root_path
+    end
+
+    @payment_amount = 0
+
+    session["cart"].each do |item|
+      @payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+    end
+
+  end
+
   def plus_weight
     session["cart"].each do |durian|
       if durian["id"] == post_params["id"]
         durian["weight"] = durian["weight"].to_i + 1
         durian["weight"] = durian['weight'].to_s
+
         redirect_to shoppingcarts_path
       end
     end
@@ -31,14 +50,11 @@ def index
       if durian["id"] == post_params["id"]
         durian["weight"] = durian["weight"].to_i - 1
         durian["weight"] = durian['weight'].to_s
+
         redirect_to shoppingcarts_path
       end
     end
   end
-
-  def edit_item
-  end
-
 
   def delete_item
     session["cart"].each do |durian|
@@ -50,6 +66,7 @@ def index
   end
 
   def add_item
+
     # converting request.body which is in string (ajax.js) to JSON object
     current_order = JSON.parse(request.body.read)
     if !session["cart"].kind_of?(Array)
@@ -69,7 +86,6 @@ def index
         found = true
       end
     end
-  end
 
   if found == false
     session["cart"] << current_order
@@ -82,7 +98,11 @@ def index
 
 private
   def post_params
-    params.require(:durian).permit(:id, :name, :price_per_kg, :weight)
+    params.require(:durian).permit(:id, :name, :price_per_kg, :weight, :image_url)
+  end
+
+  def delivery_params
+    params.require(:delivery).permit(:name, :email, :contact_number, :comment, :postal_code, :unit_number, :address, :date, :time)
   end
 
 end

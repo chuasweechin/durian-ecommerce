@@ -10,30 +10,7 @@ class OrdersController < ApplicationController
 
   skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
 
-  def index
-    @orders = Order.all
-  end
-
-  def show
-    @order = Order.find(params[:id])
-  end
-
-  def new
-  end
-
-  def create
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
-  def notification
+  def send_sms_invoice ()
     client = Twilio::REST::Client.new(account_sid, auth_token)
 
     client.messages.create(
@@ -42,74 +19,90 @@ class OrdersController < ApplicationController
       body: "Hello World!"
     )
 
-    render plain: "SMS Sent!"
-  end
-
-  def postal_code
-    url = 'https://developers.onemap.sg/commonapi/search?searchVal=510578&returnGeom=N&getAddrDetails=Y'
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-
-    response_in_JSON = JSON.parse(response)
-
-    if (response_in_JSON["results"].length == 0 )
-      render plain: "not found!"
-    else
-      render plain: response_in_JSON["results"][0]["ADDRESS"]
-    end
   end
 
   def payment
-    payment_amount = 0
-    txn_id = SecureRandom.uuid
-    @user = User.find(current_user.id)
+    url = URI.parse("https://checkout.stripe.com/pay")
+    req = Net::HTTP.new(url.host, url.port)
+    req.use_ssl = true if url.scheme == 'https'
+    res = req.request_head(url.path)
 
-    # create payment order in the system
-    session["cart"].each do |item|
-      @durian = Durian.find(item["id"])
+    if shopping_cart_valid? == true && res.code == "200"
+      payment_name = ""
+      payment_amount = 0
+      txn_id = SecureRandom.uuid
 
-      @order = Order.new(weight_in_kg: item["weight"],
-                         payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
-                         txn_date: DateTime.current(),
-                         txn_id: txn_id,
-                         delivery_address: "somewhere",
-                         order_status: "processing",
-                         user: @user,
-                         durian: @durian)
+      # create delivery record in database
+      @delivery = Delivery.new(name: session["delivery_details"]["name"],
+                           email: session["delivery_details"]["email"],
+                           contact_number: session["delivery_details"]["contact_number"],
+                           delivery_comment: session["delivery_details"]["comment"],
+                           delivery_address: session["delivery_details"]["address"],
+                           postal_code: session["delivery_details"]["postal_code"],
+                           unit_number: session["delivery_details"]["unit_number"],
+                           delivery_date: session["delivery_details"]["date"],
+                           delivery_time: session["delivery_details"]["time"])
+      @delivery.save
 
-      @order.save
-      payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+      # create order record in database with created status
+      session["cart"].each do |item|
+        @durian = Durian.find(item["id"])
+
+        payment_name += @durian.name + ", "
+        payment_amount += item["price_per_kg"].to_i * item["weight"].to_i
+
+        @order = Order.new(weight_in_kg: item["weight"],
+                           payment_amount: item["price_per_kg"].to_i * item["weight"].to_i,
+                           txn_date: DateTime.current(),
+                           txn_id: txn_id,
+                           order_status: "created",
+                           delivery: @delivery,
+                           durian: @durian)
+
+         @order.save
+      end
+
+      # create stripe checkout session
+      session = Stripe::Checkout::Session.create(
+        payment_method_types: ['card'],
+        line_items: [{
+          name: "Payment for #{ payment_name.chomp(",") } Durian",
+          description: "Order ID: #{ txn_id }",
+          images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
+          amount: payment_amount,
+          currency: 'sgd',
+          quantity: 1
+        }],
+        success_url: "http://localhost:3000/orders/payment/success/#{ txn_id }",
+        cancel_url: "http://localhost:3000"
+      )
+
+      render plain: session.id
+
+    else
+      render plain: "something is wrong with the shopping cart"
     end
+  end
 
-    session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
-      line_items: [{
-        name: 'Payment for Durian',
-        description: "Order ID: #{txn_id}",
-        images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
-        amount: payment_amount,
-        currency: 'sgd',
-        quantity: 1
-      }],
-      success_url: 'http://localhost:3000',
-      cancel_url: 'http://localhost:3000',
-    )
-
-    render plain: session.id
+  def payment_success
+    @order_id = params[:id]
+    session["cart"] = []
   end
 
   def payment_webhook
     event_json = JSON.parse(request.body.read)
 
-    # Do something with event_json
-    p event_json["data"]["object"]["payment_intent"]
+    txn_id = event_json["data"]["object"]["display_items"][0]["custom"]["description"].split(": ")[1]
+    charge_id = event_json["data"]["object"]["payment_intent"]
 
-    # Return a response to acknowledge receipt of the event
-    render plain: "test webhook"
-  end
+    @orders = Order.where(txn_id: txn_id)
 
-private
-  def post_params
-    params.require(:order).permit(:name)
+    @orders.each do |order|
+       order.update(order_status: 'paid', charge_id: event_json["data"]["object"]["payment_intent"])
+    end
+
+    # call send invoice method pass, in the @orders for processing
+
+    render plain: "webhook"
   end
 end

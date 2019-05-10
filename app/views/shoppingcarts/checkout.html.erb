@@ -1,0 +1,81 @@
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Delivery Information</h1>
+     </div>
+</section>
+
+<h2>Contact Details</h2>
+
+<%= form_with scope: :delivery, url: set_delivery_details_path, local: true do |form| %>
+
+<div class="container">
+	<div class="row">
+		<div class="col-3">
+  		Name:<br>
+  		<%= form.text_field :name, class: "form-control", value: session["delivery_details"]["name"]%>
+		</div>
+		<div class="col-3">
+  		Email:<br>
+  		<%= form.email_field :email, class: "form-control", value: session["delivery_details"]["email"]%>
+		</div>
+		<div class="col-3">
+  		Contact Number:<br>
+  		<%= form.number_field :contact_number, class: "form-control", value: session["delivery_details"]["contact_number"]%>
+		</div>
+	</div>
+<br>
+	<div class="row">
+		<div class="col-9">
+  		Add Comments About Your Order:<br>
+  		<%= form.text_area :comment, class: "form-control", rows: "3", value: session["delivery_details"]["comment"]%>
+		</div>
+	</div>
+
+</div>
+
+
+<hr/>
+<h2>Delivery Details</h2>
+
+<div class="container">
+	<div class="row">
+		<div class="col-4">
+  		Postal Code:<br>
+  		<%= form.number_field :postal_code, class: "form-control", value: session["delivery_details"]["postal_code"]%>
+		</div>
+
+		<div class="col-4">
+			Unit Number:<br>
+			<%= form.text_field :unit_number, class: "form-control", value: session["delivery_details"]["unit_number"]%>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="row">
+		<div class="col-8">
+			Address:<br>
+			<%= form.text_field :address, class: "form-control", value: session["delivery_details"]["address"]%>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="row">
+		<div class="col-4">
+			Delivery Date:<br>
+			<%= form.date_field :date, class: "form-control" , value: session["delivery_details"]["date"]%>
+		</div>
+
+		<div class="col-4">
+			Delivery Time:<br>
+
+			<%= form.select :time, options_for_select([ "10.00am - 12.00pm", "11.00am - 1.00pm", "3.00pm - 5.00pm", "5.00pm - 7.00pm"], session["delivery_details"]["time"]), {}, { :class => 'form-control' }  %>
+		</div>
+	</div>
+
+</div>
+
+<a href="/shoppingcarts" class='btn btn-info'>Back to Shopping Cart</a>
+<%= form.submit 'Next', class: "btn btn-primary"%>
+<%end%>

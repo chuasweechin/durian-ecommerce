@@ -1,16 +1,15 @@
 class ApplicationController < ActionController::Base
-   protect_from_forgery with: :exception
+  def shopping_cart_valid?
+    if session["cart"].length === 0
+      return false
+    else
+      session["cart"].each do |item|
+        if item["weight"].to_i < 1
+          return false
+        end
+      end
+    end
 
-   before_action :configure_permitted_parameters, if: :devise_controller?
-
-
-   protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:email, :password, :address, :phone_number )}
-
-    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:email, :password, :current_password, :address, :phone_number )}
-
-    @shopping_cart_items = session["cart"]
+    return true
   end
 end
