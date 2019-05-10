@@ -1,5 +1,8 @@
 // add an event listener to the document to run a function when the dom has loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => addDurianToCartAjax())
+
+
+var addDurianToCartAjax = function() {
     // select all the '.durian-form's and run a function on each of them
     document.querySelectorAll('.durian-form').forEach(form => {
         // add event listener which takes in a submit event
@@ -37,4 +40,4 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(json => document.getElementById('cart-length').innerHTML = json.length);
         })
     })
-})
+}
