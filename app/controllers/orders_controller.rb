@@ -4,22 +4,41 @@ require 'net/http'
 require 'twilio-ruby'
 
 class OrdersController < ApplicationController
-  auth_token = ENV['TWILIO_API_KEY']
-  account_sid = ENV['TWILIO_ACCOUNT_SID']
-  Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-
   skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
 
-  def send_sms_invoice ()
+  def send_sms_invoice (orders)
+    # prepare content for sms
+    sms_order_detail = ""
+    send_to = "+65" + orders[0].delivery["contact_number"]
+
+    total_bill_for_display = 0
+    order_id_for_display = orders[0]["txn_id"]
+    address_for_display = orders[0].delivery["delivery_address"]
+    dtime_for_display = orders[0].delivery["delivery_time"]
+    ddate_for_display = Date.parse(orders[0].delivery["delivery_date"]).strftime('%d %b %Y')
+
+    orders.each do |order|
+      sms_order_detail += "- #{ order["weight_in_kg"].to_i } kg of #{ order.durian.name } \n"
+      total_bill_for_display += order["payment_amount"].to_i/100
+    end
+
+    sms_title = "Order ID: #{ order_id_for_display } \n\nWe have received your payment of $#{ total_bill_for_display } for:"
+    sms_delivery = "Your order will be delivered to #{ address_for_display } on #{ ddate_for_display } from #{ dtime_for_display }"
+    sms_footer = "\nPlease call us at 6123 4567 if you need further details"
+
+    # twilio api method
+    auth_token = ENV['TWILIO_API_KEY']
+    account_sid = ENV['TWILIO_ACCOUNT_SID']
+
     client = Twilio::REST::Client.new(account_sid, auth_token)
 
     client.messages.create(
       from: ENV['TWILIO_SENDER_PHONE_NUMBER'],
-      to: '+6594242851',
-      body: "Hello World!"
+      to: send_to,
+      body: sms_title + "\n" + sms_order_detail + "\n" + sms_delivery + "\n" + sms_footer
     )
-
   end
+
 
   def payment
     url = URI.parse("https://checkout.stripe.com/pay")
@@ -63,10 +82,12 @@ class OrdersController < ApplicationController
       end
 
       # create stripe checkout session
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
         line_items: [{
-          name: "Payment for #{ payment_name.chomp(",") } Durian",
+          name: "Payment for #{ payment_name.chomp(", ") } Durian",
           description: "Order ID: #{ txn_id }",
           images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
           amount: payment_amount,
@@ -84,10 +105,12 @@ class OrdersController < ApplicationController
     end
   end
 
+
   def payment_success
     @order_id = params[:id]
     session["cart"] = []
   end
+
 
   def payment_webhook
     event_json = JSON.parse(request.body.read)
@@ -102,6 +125,7 @@ class OrdersController < ApplicationController
     end
 
     # call send invoice method pass, in the @orders for processing
+    send_sms_invoice(@orders)
 
     render plain: "webhook"
   end
