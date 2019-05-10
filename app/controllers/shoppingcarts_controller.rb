@@ -1,7 +1,8 @@
 class ShoppingcartsController < ApplicationController
 
 skip_before_action :verify_authenticity_token
-def index
+
+  def index
     @payment_amount = 0
 
     session["cart"].each do |item|
@@ -66,35 +67,33 @@ def index
   end
 
   def add_item
+    found = false;
 
     # converting request.body which is in string (ajax.js) to JSON object
     current_order = JSON.parse(request.body.read)
-    if !session["cart"].kind_of?(Array)
-      session["cart"] = []
-    end
 
-
-  found = false;
-  if session["cart"].length == 0
-    session["cart"] << current_order
-    found = true
-  else
-    session["cart"].each do |durian|
-      if durian["id"] == current_order["id"]
-        durian['weight'] = durian['weight'].to_i + current_order["weight"].to_i
-        durian['weight'] = durian['weight'].to_s
-        found = true
+    if session["cart"].length == 0
+      session["cart"] << current_order
+      found = true
+    else
+      session["cart"].each do |durian|
+        if durian["id"] == current_order["id"]
+          durian['weight'] = durian['weight'].to_i + current_order["weight"].to_i
+          durian['weight'] = durian['weight'].to_s
+          found = true
+        end
       end
+
+      if found == false
+        session["cart"] << current_order
+      end
+
+      # redirect_to root_path
+      render :json => session["cart"]
     end
 
-  if found == false
-    session["cart"] << current_order
-  end
-  p 'cart'
-  p session["cart"]
-  # redirect_to root_path
-  render :json => session["cart"]
-  end
+end
+
 
 private
   def post_params
