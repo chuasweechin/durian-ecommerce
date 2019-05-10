@@ -75,6 +75,7 @@ skip_before_action :verify_authenticity_token
     if session["cart"].length == 0
       session["cart"] << current_order
       found = true
+      render :json => session["cart"]
     else
       session["cart"].each do |durian|
         if durian["id"] == current_order["id"]
