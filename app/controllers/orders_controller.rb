@@ -10,15 +10,16 @@ class OrdersController < ApplicationController
 
   skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
 
-  def send_sms_invoice ()
-    client = Twilio::REST::Client.new(account_sid, auth_token)
+  def send_sms_invoice (orders)
+    byebug
 
-    client.messages.create(
-      from: ENV['TWILIO_SENDER_PHONE_NUMBER'],
-      to: '+6594242851',
-      body: "Hello World!"
-    )
+    # client = Twilio::REST::Client.new(account_sid, auth_token)
 
+    # client.messages.create(
+    #   from: ENV['TWILIO_SENDER_PHONE_NUMBER'],
+    #   to: '+6594242851',
+    #   body: "Hello World!"
+    # )
   end
 
   def payment
@@ -102,6 +103,7 @@ class OrdersController < ApplicationController
     end
 
     # call send invoice method pass, in the @orders for processing
+    send_sms_invoice(@orders)
 
     render plain: "webhook"
   end
