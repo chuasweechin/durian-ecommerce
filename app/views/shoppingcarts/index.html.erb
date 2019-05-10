@@ -45,10 +45,10 @@
 																			<%= form.submit '+', class: "btn btn-success"%>
 																		<% end %>
 																		</div>
-
+																		&nbsp;&nbsp;&nbsp;
 																		<div class="col-md-3">
 																			<%= item["weight"] + "kg" %>
-																		</div>
+																		</div>&nbsp;&nbsp;
 
 																		<div class="col-md-3">
 												  					<%= form_with scope: :durian, url: shoppingcarts_minus_path, local: true do |form| %>
@@ -64,7 +64,7 @@
 		                            </td>
 
 		                            <td class="text-right">
-		                            	<%= form_with scope: :durian, url: shoppingcarts_delete_path, local: true do |form| %>
+		                            	<%= form_with scope: :durian, url: shoppingcarts_delete_path, class: "remove-btn", local: true do |form| %>
 																		<%= form.hidden_field :id, :value => item["id"] %>
 																		<%= form.submit 'Remove', class: "btn btn-warning"%>
 																	<% end %>
@@ -78,7 +78,7 @@
 	                            <td></td>
 	                            <td></td>
 	                            <td><strong>Total</strong></td>
-	                            <td class="text-right"><strong><%= "$" + (@payment_amount/100).to_s %></strong></td>
+	                            <td class="text-right"><strong id="payment_amount"><%= "$" + (@payment_amount/100).to_s %></strong></td>
 	                        </tr>
 
 	                    </tbody>
