@@ -17,17 +17,38 @@
   font-weight: bold;
 }
 
-
-
 h1 {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 2.5em;
 }
 
+h4 {
+  font-family: 'Lato', sans-serif;
+  font-size: 2em;
+}
+
+h4.card-title {
+  font-weight: 600;
+}
+
+h5 {
+  font-family: 'Lato', sans-serif;
+
+}
+
+p.card-text {
+  font-size: 17px;
+}
+
+.navbar-brand {
+  font-family: 'Arvo', serif;
+}
+
 p {
   font-size: 1.5em;
   color: #222B36;
+  font-family: 'Lato', sans-serif;
 }
 
 input {
@@ -195,7 +216,6 @@ a.qty:hover {
   font-weight: bold;
   background: #1BDB4A;
   color: #fff;
-  box-shadow: 0 3px 0 rgba(59,154,198, 1)
 }
 
 .btn:hover {
@@ -253,16 +273,30 @@ html {
 }
 
 footer {
-  font-size: 80%;
+  font-size: 90%;
   position: absolute;
   width: 100%;
-  height: 60px; /* Set the fixed height of the footer here */
-  line-height: 60px; /* Vertically center the text there */
+  height: 80px; /* Set the fixed height of the footer here */
+  line-height: 80px; /* Vertically center the text there */
   background-color: #f5f5f5;
-  padding-bottom: 73px;
+  padding-bottom: 90px;
   align-items: center;
 }
 
 #delivery_address {
 	text-transform: capitalize;
+}
+
+.breadcrumbs a.current, .breadcrumbs a:hover {
+  color: #111;
+  text-decoration: none;
+}
+
+.breadcrumbs a.cart-greyout {
+  color: grey;
+  text-decoration: none;
+}
+
+.breadcrumbs {
+  padding: 15px;
 }
