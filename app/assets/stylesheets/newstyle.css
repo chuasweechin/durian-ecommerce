@@ -333,3 +333,13 @@ footer {
 .compare {
 	min-height: 400px;
 }
+
+.empty {
+	min-height: 350px;
+	text-align: center;
+}
+
+.payment-success {
+	min-height: 350px;
+	text-align: center;
+}
