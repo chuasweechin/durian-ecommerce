@@ -1,8 +1,23 @@
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Delivery Information</h1>
-     </div>
-</section>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<!--Payment Progress -->
+<div class="checkout-page-title page-title">
+	<div class="page-title-inner flex-row medium-flex-wrap container">
+	  <div class="flex-col flex-grow medium-text-center">
+  	 	 <nav class="breadcrumbs heading-font checkout-breadcrumbs text-center h2 strong">
+    	   <a href="/shoppingcarts" class="cart-greyout">Shopping Cart</a>
+    	   <span class="divider hide-for-small"><i class="icon-angle-right"></i></span>
+    	   <a href="/shoppingcarts/checkout" class="current">Checkout</a>
+    	   <span class="divider hide-for-small"><i class="icon-angle-right"></i></span>
+    	   <a href="#" class="cart-greyout">Order Confirmation</a>
+		 </nav>
+	  </div><!-- .flex-left -->
+	</div><!-- flex-row -->
+</div>	
+
+
+<div class="container mb-4">
 
 <h2>Contact Details</h2>
 
@@ -76,6 +91,9 @@
 
 </div>
 
+
 <a href="/shoppingcarts" class='btn btn-info'>Back to Shopping Cart</a>
 <%= form.submit 'Next', class: "btn btn-primary"%>
 <%end%>
+
+</div>

@@ -1,8 +1,21 @@
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Shopping Cart</h1>
-     </div>
-</section>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<!--Payment Progress -->
+<div class="checkout-page-title page-title">
+	<div class="page-title-inner flex-row medium-flex-wrap container">
+	  <div class="flex-col flex-grow medium-text-center">
+  	 	 <nav class="breadcrumbs heading-font checkout-breadcrumbs text-center h2 strong">
+    	   <a href="/shoppingcarts" class="current">Shopping Cart</a>
+    	   <span class="divider hide-for-small"><i class="icon-angle-right"></i></span>
+    	   <a href="/shoppingcarts/checkout" class="cart-greyout">Checkout</a>
+    	   <span class="divider hide-for-small"><i class="icon-angle-right"></i></span>
+    	   <a href="#" class="cart-greyout">Order Confirmation</a>
+		 </nav>
+	  </div><!-- .flex-left -->
+	</div><!-- flex-row -->
+</div>
+
 
 <% if session["cart"].length === 0 %>
 	<h2>You have a empty shopping cart</h1>
@@ -39,24 +52,28 @@
 
 		                            <td>
 		                            	<div class="form-row">
-																		<div class="col-md-3">
-																		<%= form_with scope: :durian, url: shoppingcarts_plus_path, class: "plus-btn", local: true do |form| %>
-																			<%= form.hidden_field :id, :value => item["id"] %>
-																			<%= form.submit '+', class: "btn btn-success", data: { disable_with: false } %>
-																		<% end %>
-																		</div>
-																		&nbsp;&nbsp;&nbsp;
-																		<div class="col-md-3" id='<%= item["id"] %>-weight'>
-																			<%= item["weight"] + "kg" %>
-																		</div>&nbsp;&nbsp;
+											<div class="col-md-3">
+												<%= form_with scope: :durian, url: shoppingcarts_minus_path, class: "minus-btn", local: true do |form| %>
+												<%= form.hidden_field :id, :value => item["id"] %>
+												<%= form.submit '-', class: "btn btn-outline-dark", data: { disable_with: false }%>
+											<% end %>
+											</div>
+											
+											&nbsp;&nbsp;&nbsp;
 
-																		<div class="col-md-3">
-												  					<%= form_with scope: :durian, url: shoppingcarts_minus_path, class: "minus-btn", local: true do |form| %>
-													  					<%= form.hidden_field :id, :value => item["id"] %>
-													  					<%= form.submit '-', class: "btn btn-danger", data: { disable_with: false }%>
-												  					<% end %>
-																		</div>
-																	</div>
+											<div class="col-md-3" id='<%= item["id"] %>-weight'>
+												<%= item["weight"] + "kg" %>
+											</div>
+											
+											&nbsp;&nbsp;
+																		
+											<div class="col-md-3">
+												<%= form_with scope: :durian, url: shoppingcarts_plus_path, class: "plus-btn", local: true do |form| %>
+												<%= form.hidden_field :id, :value => item["id"] %>
+												<%= form.submit '+', class: "btn btn-outline-dark", data: { disable_with: false } %>
+											<% end %>
+											</div>
+										</div>
 		                            </td>
 
 		                            <td class="text-right" id='<%= item["id"] %>-total-price'>
@@ -65,10 +82,10 @@
 
 		                            <td class="text-right">
 		                            	<%= form_with scope: :durian, url: shoppingcarts_delete_path, class: "remove-btn", local: true do |form| %>
-																		<%= form.hidden_field :id, :value => item["id"] %>
-																		<%= form.submit 'Remove', class: "btn btn-warning"%>
-																	<% end %>
-																</td>
+											<%= form.hidden_field :id, :value => item["id"] %>
+											<%= form.submit 'x', class: "btn btn-danger"%>
+										<% end %>
+									</td>
 		                        </tr>
 	                    		<% end %>
 
@@ -89,7 +106,7 @@
 	        <div class="col mb-2">
 	            <div class="row">
 	                <div class="col-sm-12  col-md-6">
-	                    <a href="/" class="btn btn-lg btn-block btn-primary">Continue Shopping</a>
+	                    <a href="/" class="btn btn-lg btn-block btn-outline-primary">Continue Shopping</a>
 	                </div>
 	                <div class="col-sm-12 col-md-6 text-right">
 	                    <a href="/shoppingcarts/checkout" class="btn btn-lg btn-block btn-success text-uppercase">Checkout</a>
