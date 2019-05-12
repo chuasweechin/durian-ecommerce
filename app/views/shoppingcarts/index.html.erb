@@ -1,4 +1,3 @@
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
 <!--Payment Progress -->
@@ -10,7 +9,7 @@
     	   <span class="divider hide-for-small"><i class="icon-angle-right"></i></span>
     	   <a href="/shoppingcarts/checkout" class="cart-greyout">Checkout</a>
     	   <span class="divider hide-for-small"><i class="icon-angle-right"></i></span>
-    	   <a href="#" class="cart-greyout">Order Confirmation</a>
+    	   <a href="/shoppingcarts/confirmation" class="cart-greyout">Order Confirmation</a>
 		 </nav>
 	  </div><!-- .flex-left -->
 	</div><!-- flex-row -->
@@ -38,8 +37,8 @@
 	                    <tbody>
 	                    		<% session["cart"].each do |item| %>
 		                    		<tr>
-		                            <td>
-		                            	<%= image_tag(item["image_url"]) %>
+		                            <td class="cart-image-column">
+		                            	<%= image_tag(item["image_url"], :class => "cart-image") %>
 		                            </td>
 
 		                            <td>
@@ -51,22 +50,22 @@
 		                            </td>
 
 		                            <td>
-		                            	<div class="form-row">
+		                            	<div class="cart-weight-column">
 											<div class="col-md-3">
 												<%= form_with scope: :durian, url: shoppingcarts_minus_path, class: "minus-btn", local: true do |form| %>
 												<%= form.hidden_field :id, :value => item["id"] %>
 												<%= form.submit '-', class: "btn btn-outline-dark", data: { disable_with: false }%>
 											<% end %>
 											</div>
-											
+
 											&nbsp;&nbsp;&nbsp;
 
 											<div class="col-md-3" id='<%= item["id"] %>-weight'>
 												<%= item["weight"] + "kg" %>
 											</div>
-											
+
 											&nbsp;&nbsp;
-																		
+
 											<div class="col-md-3">
 												<%= form_with scope: :durian, url: shoppingcarts_plus_path, class: "plus-btn", local: true do |form| %>
 												<%= form.hidden_field :id, :value => item["id"] %>
@@ -106,10 +105,10 @@
 	        <div class="col mb-2">
 	            <div class="row">
 	                <div class="col-sm-12  col-md-6">
-	                    <a href="/" class="btn btn-lg btn-block btn-outline-primary">Continue Shopping</a>
+	                    <a href="/" class="btn btn-block btn-outline-primary">Continue Shopping</a>
 	                </div>
 	                <div class="col-sm-12 col-md-6 text-right">
-	                    <a href="/shoppingcarts/checkout" class="btn btn-lg btn-block btn-success text-uppercase">Checkout</a>
+	                    <a href="/shoppingcarts/checkout" class="btn btn-block btn-success">Checkout</a>
 	                </div>
 	            </div>
 	        </div>

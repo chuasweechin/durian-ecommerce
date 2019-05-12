@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
 
     return true
   end
+
+  def format_date_for_display (d)
+    return Date.parse(d).strftime('%d %b %Y')
+  end
 end

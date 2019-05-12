@@ -1,3 +1,6 @@
+require 'HTTParty'
+require 'nokogiri'
+
 class DuriansController < ApplicationController
   def index
     @durians = Durian.all

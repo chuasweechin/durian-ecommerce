@@ -8,16 +8,18 @@ require 'twilio-ruby'
 class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:payment_webhook]
 
-  def send_sms_invoice (orders)
+  def send_invoice (orders)
     # prepare content for sms
     sms_order_detail = ""
+    email_address = orders[0].delivery["email"]
     send_to = "+65" + orders[0].delivery["contact_number"]
 
     total_bill_for_display = 0
+
     order_id_for_display = orders[0]["txn_id"]
     address_for_display = orders[0].delivery["delivery_address"]
     dtime_for_display = orders[0].delivery["delivery_time"]
-    ddate_for_display = Date.parse(orders[0].delivery["delivery_date"]).strftime('%d %b %Y')
+    ddate_for_display = format_date_for_display(orders[0].delivery["delivery_date"])
 
     orders.each do |order|
       sms_order_detail += "- #{ order["weight_in_kg"].to_i } kg of #{ order.durian.name } \n"
@@ -39,8 +41,12 @@ class OrdersController < ApplicationController
       to: send_to,
       body: sms_title + "\n" + sms_order_detail + "\n" + sms_delivery + "\n" + sms_footer
     )
-  end
 
+    # form spree email api post method
+    response = HTTParty.post("https://formspree.io/sampiochua@gmail.com", body: { email: email_address, message: sms_title + "\n" + sms_order_detail + "\n" + sms_delivery + "\n" + sms_footer } )
+
+    p response
+  end
 
   def payment
     url = URI.parse("https://checkout.stripe.com/pay")
@@ -91,7 +97,7 @@ class OrdersController < ApplicationController
         line_items: [{
           name: "Payment for #{ payment_name.chomp(", ") } Durian",
           description: "Order ID: #{ txn_id }",
-          images: ['http://c40dc27b.ngrok.io/assets/durian-payment.jpg'],
+          images: ['https://i.imgur.com/upyLrhW.jpg'],
           amount: payment_amount,
           currency: 'sgd',
           quantity: 1
@@ -126,7 +132,7 @@ class OrdersController < ApplicationController
        order.update(order_status: 'paid', charge_id: event_json["data"]["object"]["payment_intent"])
     end
 
-    send_sms_invoice(@orders)
+    send_invoice(@orders)
 
     render plain: "success"
   end

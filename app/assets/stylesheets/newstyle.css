@@ -38,7 +38,7 @@ h5 {
 }
 
 p.card-text {
-  font-size: 17px;
+  font-size: 12px;
 }
 
 .navbar-brand {
@@ -299,4 +299,22 @@ footer {
 
 .breadcrumbs {
   padding: 15px;
+}
+
+.cart-image-column {
+	width: 260px;
+}
+
+.cart-weight-column {
+	margin: auto;
+	width: 180px;
+	display: flex;
+}
+
+.cart-image {
+	width: 250px;
+}
+
+.capitalize {
+	text-transform: capitalize;
 }
