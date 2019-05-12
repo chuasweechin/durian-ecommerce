@@ -42,14 +42,35 @@
 										<%= form.hidden_field :image_url, :value => durian.image_url %>
 								    <%= form.hidden_field :price_per_kg, :value => durian.price_per_kg %>
 								    <%= form.hidden_field :weight, :value => 1 %>
-								    <%= form.submit 'Add to cart', class: "btn btn-success btn-sm", data: { disable_with: false } %>
+								    <%= form.submit 'Add to cart', class: "btn btn-success btn-sm", "role" => "button", "data-container" => "body", "data-toggle" => "popover", "data-trigger" => "focus" ,"data-placement" => "top", "data-content" => "Added 1 kg of #{ durian.name } to your cart!", data: { disable_with: false } %>
+
+
 								<% end %>
 	                </div>
 	              </div>
 	            <div class="card-footer">
-	              <small class="text-muted">Sweetness &#9733; &#9733; &#9733; &#9733; &#9734;</small>
+	            	<%	sweetness_rating = ""
+	            		(1..5).each do |number|
+		            		if number <= durian.sweet.name.to_i
+		            			sweetness_rating += " ★"
+		            		else
+		            			sweetness_rating += " ☆"
+		            		end
+	            		end
+	            	%>
+	              <small class="text-muted">Sweetness <%= sweetness_rating%></small>
+
 	              <br>
-	              <small class="text-muted">Creaminess &#9733; &#9733; &#9733; &#9734; &#9734;</small>
+	              <%	creaminess_rating = ""
+	            		(1..5).each do |number|
+		            		if number <= durian.cream.name.to_i
+		            			creaminess_rating += " ★"
+		            		else
+		            			creaminess_rating += " ☆"
+		            		end
+	            		end
+	            	%>
+	            	<small class="text-muted">Creaminess <%= creaminess_rating%></small>
 	            </div>
 	          </div>
 	        </div>

@@ -49,4 +49,12 @@ window.onload = function() {
     if (document.querySelector('#delivery_postal_code') !== null) {
         document.querySelector('#delivery_postal_code').addEventListener('keyup', postalCodeEventHandler)
     }
+
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+
+    $('.popover-dismiss').popover({
+      trigger: 'focus'
+    })
 };

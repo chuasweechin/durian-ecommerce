@@ -318,3 +318,18 @@ footer {
 .capitalize {
 	text-transform: capitalize;
 }
+
+.navbar-brand > a {
+	text-decoration: none;
+	margin-right: 500px;
+  color: white;
+}
+
+.navbar-brand > a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+.compare {
+	min-height: 400px;
+}
