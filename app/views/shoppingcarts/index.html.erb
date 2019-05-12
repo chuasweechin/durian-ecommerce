@@ -15,7 +15,6 @@
 	</div><!-- flex-row -->
 </div>
 
-
 <% if session["cart"].length === 0 %>
 	<h2>You have a empty shopping cart</h1>
 <% else %>
@@ -51,29 +50,29 @@
 
 		                            <td>
 		                            	<div class="cart-weight-column">
-											<div class="col-md-3">
-												<%= form_with scope: :durian, url: shoppingcarts_minus_path, class: "minus-btn", local: true do |form| %>
-												<%= form.hidden_field :id, :value => item["id"] %>
-												<%= form.submit '-', class: "btn btn-outline-dark", data: { disable_with: false }%>
-											<% end %>
-											</div>
+																		<div class="col-md-3">
+																			<%= form_with scope: :durian, url: shoppingcarts_minus_path, class: "minus-btn", local: true do |form| %>
+																			<%= form.hidden_field :id, :value => item["id"] %>
+																			<%= form.submit '-', class: "btn btn-outline-dark", data: { disable_with: false }%>
+																			<% end %>
+																		</div>
 
-											&nbsp;&nbsp;&nbsp;
+																		&nbsp;&nbsp;&nbsp;
 
-											<div class="col-md-3" id='<%= item["id"] %>-weight'>
-												<%= item["weight"] + "kg" %>
-											</div>
+																		<div class="col-md-3" id='<%= item["id"] %>-weight'>
+																			<%= item["weight"] + "kg" %>
+																		</div>
 
-											&nbsp;&nbsp;
+																		&nbsp;&nbsp;
 
-											<div class="col-md-3">
-												<%= form_with scope: :durian, url: shoppingcarts_plus_path, class: "plus-btn", local: true do |form| %>
-												<%= form.hidden_field :id, :value => item["id"] %>
-												<%= form.submit '+', class: "btn btn-outline-dark", data: { disable_with: false } %>
-											<% end %>
-											</div>
-										</div>
-		                            </td>
+																		<div class="col-md-3">
+																			<%= form_with scope: :durian, url: shoppingcarts_plus_path, class: "plus-btn", local: true do |form| %>
+																			<%= form.hidden_field :id, :value => item["id"] %>
+																			<%= form.submit '+', class: "btn btn-outline-dark", data: { disable_with: false } %>
+																			<% end %>
+																		</div>
+																	</div>
+		                          	</td>
 
 		                            <td class="text-right" id='<%= item["id"] %>-total-price'>
 		                            	<%= "$" + ((item["price_per_kg"].to_i * item["weight"].to_i)/100).to_s %>
@@ -81,10 +80,10 @@
 
 		                            <td class="text-right">
 		                            	<%= form_with scope: :durian, url: shoppingcarts_delete_path, class: "remove-btn", local: true do |form| %>
-											<%= form.hidden_field :id, :value => item["id"] %>
-											<%= form.submit 'x', class: "btn btn-danger"%>
-										<% end %>
-									</td>
+																	<%= form.hidden_field :id, :value => item["id"] %>
+																	<%= form.submit 'Remove', class: "btn btn-danger"%>
+																	<% end %>
+																</td>
 		                        </tr>
 	                    		<% end %>
 
