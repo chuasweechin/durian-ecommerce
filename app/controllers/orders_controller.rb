@@ -95,8 +95,8 @@ class OrdersController < ApplicationController
           currency: 'sgd',
           quantity: 1
         }],
-        success_url: "http://localhost:3000/orders/payment/success/#{ txn_id }",
-        cancel_url: "http://localhost:3000"
+        success_url: "https://durian-durian.herokuapp.com/orders/payment/success/#{ txn_id }",
+        cancel_url: "https://durian-durian.herokuapp.com/shoppingcarts/confirmation"
       )
 
       render plain: session.id
