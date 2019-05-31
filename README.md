@@ -23,5 +23,7 @@ Things you may want to cover:
 
 * ...
 
-# Issue encountered for Heroku deployment
+# Fixed done for Heroku deployment
 - Convert secret key into ENV
+- Always use lower case for require gem in .rb files
+- modify config/environments/production.rb with config.assets.js_compressor = Uglifier.new(harmony: true)
