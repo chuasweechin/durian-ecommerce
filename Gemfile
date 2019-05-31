@@ -13,8 +13,8 @@ gem 'twilio-ruby'
 gem 'stripe'
 
 # Use for Scrapping Data
-gem 'nokogiri'
-gem 'httparty'
+# gem 'nokogiri'
+# gem 'httparty'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
