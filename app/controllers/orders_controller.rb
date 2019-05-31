@@ -41,11 +41,6 @@ class OrdersController < ApplicationController
       to: send_to,
       body: sms_title + "\n" + sms_order_detail + "\n" + sms_delivery + "\n" + sms_footer
     )
-
-    # form spree email api post method
-    response = HTTParty.post("https://formspree.io/sampiochua@gmail.com", body: { email: email_address, message: sms_title + "\n" + sms_order_detail + "\n" + sms_delivery + "\n" + sms_footer } )
-
-    p response
   end
 
   def payment

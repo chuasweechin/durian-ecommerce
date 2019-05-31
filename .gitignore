@@ -29,8 +29,5 @@
 # Ignore environment file
 /*.env
 
-# Ignore gem lock file
-/Gemfile.*
-
 # Ignore ngrok executable file
 /ngrok
