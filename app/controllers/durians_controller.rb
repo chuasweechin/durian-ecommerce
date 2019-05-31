@@ -16,21 +16,21 @@ class DuriansController < ApplicationController
   end
 
   def compare_price
-    # @products = []
-    # @url = "https://www.durianculture.com/product-category/durians/"
+    @products = []
+    @url = "https://www.durianculture.com/product-category/durians/"
 
-    # doc = HTTParty.get(@url)
-    # @parse_page = Nokogiri::HTML(doc)
+    doc = HTTParty.get(@url)
+    @parse_page = Nokogiri::HTML(doc)
 
-    # scrapped_products = @parse_page.css(".product-type-simple")
+    scrapped_products = @parse_page.css(".product-type-simple")
 
-    # scrapped_products.each do |scrapped_product|
+    scrapped_products.each do |scrapped_product|
 
-    #   @products.push( {
-    #     "name" => scrapped_product.children[1].text.delete("\n\t").split("$")[0],
-    #     "price" => scrapped_product.children[1].text.delete("\n\t").split("$")[1]
-    #   })
-    # end
+      @products.push( {
+        "name" => scrapped_product.children[1].text.delete("\n\t").split("$")[0],
+        "price" => scrapped_product.children[1].text.delete("\n\t").split("$")[1]
+      })
+    end
 
   end
 

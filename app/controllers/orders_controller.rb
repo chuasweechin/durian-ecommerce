@@ -1,7 +1,5 @@
 require 'json'
 require 'stripe'
-require 'HTTParty'
-require 'nokogiri'
 require 'net/http'
 require 'twilio-ruby'
 
