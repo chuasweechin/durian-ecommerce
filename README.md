@@ -24,6 +24,4 @@ Things you may want to cover:
 * ...
 
 # Issue encountered for Heroku deployment
-- Do not use cross-env in package.json for production build
-- Ensure file pathing works across different machines
-- Convert secret key json into ENV
+- Convert secret key into ENV

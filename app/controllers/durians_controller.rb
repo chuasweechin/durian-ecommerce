@@ -1,5 +1,5 @@
-# require 'httparty'
-# require 'nokogiri'
+require 'httparty'
+require 'nokogiri'
 
 class DuriansController < ApplicationController
   def index
